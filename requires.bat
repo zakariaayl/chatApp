@@ -10,3 +10,4 @@ python-dotenv
 Flask-Mail
 pymysql
 flask_sqlalchemy
+psycopg2
