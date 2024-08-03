@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Users List</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-image: url('/static/images/back2.jpg');
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .navbar1 {
+            overflow: hidden;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            background-color: rgba(21, 23, 43, 0.1);
+            box-shadow: #c9e60d;
+        }
+
+        .navbar1 .left,
+        .navbar1 .right {
+            display: flex;
+            align-items: center;
+        }
+
+        .btn,
+        .btn-account {
+            width: auto;
+            padding: 10px;
+            margin: 0.5em;
+            background-color: rgba(21, 23, 43, 0.4);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            max-width: 1000px;
+            margin-top: 80px;
+        }
+
+        #friends-container,
+        #user-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            max-width: 400px;
+            width: 300px;
+            padding: 20px;
+            background-color: rgba(21, 23, 43, 0.3);
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+            overflow-y: auto;
+            max-height: 80vh;
+            align-items:center;
+            justify-items:flex-start;
+        }
+
+        #friends-container {
+            align-self: flex-start;
+        }
+
+        #user-container {
+            align-self: flex-start;
+        }
+
+        .search-bar {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .button {
+            padding: 15px 30px;
+            border: 1px solid #2c2c2c;
+            background-color: rgba(21, 23, 43, 0.3);
+            color: #ffffff;
+            font-size: 1rem;
+            cursor: pointer;
+            border-radius: 10px;
+            transition: all 0.4s ease;
+            outline: none;
+            position: relative;
+            overflow: hidden;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .button-elegante::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(
+                circle,
+                rgba(255, 255, 255, 0.25) 0%,
+                rgba(255, 255, 255, 0) 70%
+            );
+            transform: scale(0);
+            transition: transform 0.5s ease;
+        }
+
+        .button-elegante:hover::after {
+            transform: scale(4);
+        }
+
+        .button-elegante:hover {
+            border-color: #666666;
+            background: #292929;
+        }
+
+/* this is a recreation of twitter search in css */
+.form {
+  --input-text-color: #fff;
+  --input-bg-color:rgba(21, 23, 43, 0.5);
+  --focus-input-bg-color: transparent;
+  --text-color: #949faa;
+  --active-color: #1b9bee;
+  --width-of-input:350px;
+  --inline-padding-of-input: 1.2em;
+  --gap: 0.9rem;
+}
+/* form style */
+.form {
+  font-size: 0.9rem;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  width: var(--width-of-input);
+  position: relative;
+  isolation: isolate;
+  box-shadow: #292929;
+}
+/* a fancy bg for showing background and border when focus. */
+.fancy-bg {
+  position: absolute;
+  width: 100%;
+  inset: 0;
+  background: var(--input-bg-color);
+  border-radius: 30px;
+  height: 100%;
+  z-index: -1;
+  pointer-events: none;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+}
+/* label styling */
+label {
+  width: 100%;
+  padding: 0.8em;
+  height: 40px;
+  padding-inline: var(--inline-padding-of-input);
+  display: flex;
+  align-items: center;
+}
+
+.search,.close-btn {
+  position: absolute;
+}
+/* styling search-icon */
+.search {
+  fill: var(--text-color);
+  left: var(--inline-padding-of-input);
+}
+/* svg -- size */
+svg {
+  width: 17px;
+  display: block;
+}
+/* styling of close button */
+.close-btn {
+  border: none;
+  right: var(--inline-padding-of-input);
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  padding: 0.1em;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--active-color);
+  opacity: 0;
+  visibility: hidden;
+}
+/* styling of input */
+.input {
+  color: var(--input-text-color);
+  width: 100%;
+  margin-inline: min(2em,calc(var(--inline-padding-of-input) + var(--gap)));
+  background: none;
+  border: none;
+}
+
+.input:focus {
+  outline: none;
+}
+
+.input::placeholder {
+  color: var(--text-color)
+}
+/* input background change in focus */
+.input:focus ~ .fancy-bg {
+  border: 1px solid var(--active-color);
+  background: var(--focus-input-bg-color);
+}
+/* search icon color change in focus */
+.input:focus ~ .search {
+  fill: var(--active-color);
+}
+/* showing close button when typing */
+.input:valid ~ .close-btn {
+  opacity: 1;
+  visibility: visible;
+}
+/* this is for the default background in input,when selecting autofill options -- you can remove this code if you do not want to override the browser style.  */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-transition: "color 9999s ease-out, background-color 9999s ease-out";
+  -webkit-transition-delay: 9999s;
+}
+
+        @media (max-width: 600px) {
+            .button {
+                font-size: 0.9rem;
+                padding: 10px 20px;
+            }
+
+            .btn,
+            .btn-account {
+                font-size: 1rem;
+                padding: 8px 12px;
+            }
+
+            .navbar1 {
+                padding: 8px 15px;
+            }
+
+            .container {
+                flex-direction: column;
+                align-items: center;
+                gap: 10px;
+            }
+        }
+
+        .add-button{
+            width: auto;
+            padding: 10px;
+            margin: 0.5em;
+            background-color: rgba(21, 23, 43, 0.4);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .delete-button{
+            width: auto;
+            padding: 10px;
+            margin: 0.5em;
+            background-color: rgba(21, 23, 43, 0.4);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .friend-button {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(21, 23, 43, 0.4);
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .friend-button .icon {
+            position: absolute;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        .friend-button .fa-user-xmark {
+            opacity: 0;
+            transform: scale(0);
+        }
+
+        .friend-button.active .fa-user-xmark {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .friend-button.active .fa-user-plus {
+            opacity: 0;
+            transform: scale(0);
+        }
+
+        .friend-button .fa-user-plus {
+            opacity: 1;
+            transform: scale(1);
+        }
+    </style>
+    <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        {% for category, message in messages %}
+            <script>alert("{{ message }}");</script>
+        {% endfor %}
+    {% endif %}
+    {% endwith %}
+
+    <div class="navbar1">
+        <div class="left">
+            <form action="" method="POST">
+                <button type="submit" name="action" class="btn" value="deconnexion" onclick="loadlog()">
+                    <i class="fas fa-sign-out-alt"></i>
+                </button>
+            </form>
+            <button class="btn-account"><a href="javascript:window.history.back();" calss="btn-account">
+                <i class="fa-solid fa-circle-arrow-left"></i>
+                </a>
+            </button>
+            
+        </div>
+        <div class="right">
+            <form action="" method="POST" style="display:inline;">
+                <button class="btn-account" name="action" value="notif" onclick="loadlog()">
+                    <i class="fas fa-bell"></i>
+                </button>
+            </form>
+            <form action="" method="POST">
+                <button class="btn-account" name="action" value="account" onclick="loadlog()">
+                    <i class="fas fa-user"></i>
+                </button>
+            </form>
+        </div>
+    </div>
+    <div class="container">
+        <div>
+            <h1>Amis:</h1>
+            <form class="form">
+                <label for="search">
+                    <input class="input" type="text" required="" placeholder="recherche" id="friend-search">
+                    <div class="fancy-bg"></div>
+                    <div class="search">
+                        <svg viewBox="0 0 24 24" aria-hidden="true" class="r-14j79pv r-4qtqp9 r-yyyyoo r-1xvli5t r-dnmrzs r-4wgw6l r-f727ji r-bnwqim r-1plcrui r-lrvibr">
+                            <g>
+                                <path d="M21.53 20.47l-3.66-3.66C19.195 15.24 20 13.214 20 11c0-4.97-4.03-9-9-9s-9 4.03-9 9 4.03 9 9 9c2.215 0 4.24-.804 5.808-2.13l3.66 3.66c.147.146.34.22.53.22s.385-.073.53-.22c.295-.293.295-.767.002-1.06zM3.5 11c0-4.135 3.365-7.5 7.5-7.5s7.5 3.365 7.5 7.5-3.365 7.5-7.5 7.5-7.5-3.365-7.5-7.5z"></path>
+                            </g>
+                        </svg>
+                    </div>
+                    <button class="close-btn" type="reset">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                        </svg>
+                    </button>
+                </label>
+            </form>
+            <div id="friends-container"></div>
+        </div>
+        <div>
+            <h1>Tous Les Utilisateurs:</h1>
+            <div id="user-container"></div>
+        </div>
+    </div>
+
+     <script>
+        $(document).ready(function() {
+            var users = {{ users | tojson }};
+            var friends = {{ friends | tojson }};
+            var requests ={{requests | tojson}}
+            var currentUsername = "{{ username }}"; // Store the current user's username
+
+            var userContainer = $('#user-container');
+            var friendsContainer = $('#friends-container');
+            userContainer.empty();
+            friendsContainer.empty();
+
+            users.forEach(function(user) {
+                var isFriend = requests.some(friend => friend.name === user.name);
+                var row = $(
+                    '<table>' +
+                        '<tr>' +
+                            '<td><label>' + user.name + '</label></td>' +
+                            '<td><button class="friend-button ' + (isFriend ? 'active' : '') + '">' +
+                                '<i class="fa-solid fa-user-plus icon" style="color: #0feb16;"></i>' +
+                                '<i class="fa-solid fa-user-xmark icon" style="color: #e71818;"></i>' +
+                            '</button></td>' +
+                        '</tr>' +
+                    '</table>'
+                );
+
+                row.find('.friend-button').click(function() {
+                    if (isFriend) {
+                        window.location.href = '/users?action=delete&username=' + encodeURIComponent(user.name);
+                    } else {
+                        window.location.href = '/users?action=add&username=' + encodeURIComponent(user.name);
+                    }
+                    $(this).toggleClass('active');
+                    isFriend = !isFriend;
+                });
+
+                userContainer.append(row);
+            });
+
+            friends.forEach(function(friend) {
+                var button = $(
+                    '<button class="button button-elegante">' +
+                    '<i class="fas fa-user"></i>' +
+                    '<span>&nbsp;' + friend.name + '&nbsp;</span>' +
+                    '</button>'
+                ).click(function() {
+                    window.location.href = '/chat/' + encodeURIComponent(friend.name);
+                });
+                friendsContainer.append(button);
+            });
+
+            $('#friend-search').on('input', function() {
+                var searchValue = $(this).val().toLowerCase();
+                friendsContainer.find('button').each(function() {
+                    var friendName = $(this).text().toLowerCase();
+                    $(this).toggle(friendName.indexOf(searchValue) !== -1);
+                });
+            });
+
+            var socket = io();
+
+            socket.on('friend_request', function(data) {
+                if (data.to === currentUsername) {
+                    alert(`You have a new friend request from ${data.from}`);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

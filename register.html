@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>inscription</title>
+    <link rel="stylesheet" href="/static/register.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <style>
+        /* <i class="fa-solid fa-eye"></i>see
+        <i class="fa-solid fa-eye-slash"></i>no see */
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 70vh;
+            background-image: url('/static/images/back2.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-position: center;
+            color: white;
+        }
+        .form {
+            background-color: rgba(131, 134, 169, 0.4);
+            border-radius: 20px;
+            box-sizing: border-box;
+            height: 570px;
+            padding: 20px;
+            width: 320px;
+            margin: auto;
+        }
+        .title {
+            color: #eee;
+            font-family: sans-serif;
+            font-size: 30px;
+            font-weight: 600;
+            margin-top: 0px;
+        }
+        .subtitle {
+            color: #eee;
+            font-family: sans-serif;
+            font-size: 12px;
+            font-weight: 600;
+            margin-top: 0px;
+        }
+        .input-container {
+            height: 30px;
+            position: relative;
+            width: 100%;
+        }
+        .ic1 {
+            margin-top: 25px;
+        }
+        .ic2 {
+            margin-top: 30px;
+        }
+        .input {
+            background-color: rgba(21, 23, 43, 0.5);
+            border-radius: 12px;
+            border: 0;
+            box-sizing: border-box;
+            color: #eee;
+            font-size: 18px;
+            height: 100%;
+            outline: 0;
+            padding: 20px;
+            width: 100%;
+        }
+        .input:focus ~ .cut, .input:not(:placeholder-shown) ~ .cut {
+            transform: translateY(8px);
+        }
+        .input:focus ~ .iLabel, .input:not(:placeholder-shown) ~ .iLabel {
+            transform: translateY(-33px) translateX(10px) scale(0.9);
+            color: #dc2f55;
+        }
+        .input:not(:focus) ~ .iLabel {
+            color: #ffffff;
+        }
+        .cut {
+            background-color: rgba(105, 89, 65, 0.1);
+            border-radius: 10px;
+            height: 20px;
+            left: 20px;
+            position: absolute;
+            top: -20px;
+            transform: translateY(0);
+            transition: transform 200ms;
+            width: 76px;
+        }
+        .cut-short {
+            width: 50px;
+        }
+        .iLabel {
+            color: #65657b;
+            font-family: sans-serif;
+            left: 20px;
+            line-height: 14px;
+            pointer-events: none;
+            position: absolute;
+            transform-origin: 0 50%;
+            transition: transform 200ms, color 200ms;
+            top: 20px;
+        }
+        .submit {
+            background-color: rgba(15, 15, 16, 0.77);
+            border-radius: 12px;
+            border: 0;
+            box-sizing: border-box;
+            color: #eee;
+            cursor: pointer;
+            font-size: 18px;
+            height: 50px;
+             margin-top: 5px; 
+            text-align: center;
+            width: 100%;
+        }
+        .submit:active {
+            background-color: #06b;
+        }
+        .submit4 {
+            background-color: rgba(15, 15, 16, 0.77);
+            border-radius: 12px;
+            border: 0;
+            box-sizing: border-box;
+            color: #eee;
+            cursor: pointer;
+            font-size: 18px;
+            height: 50px;
+             margin-top: 5px; 
+            text-align: center;
+            width: 100%;
+        }
+        .submit4:active {
+            background-color: #06b;
+        }
+        .alert {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(255, 0, 0, 0.8);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            font-size: 16px;
+            z-index: 1000;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+            visibility: hidden;
+            opacity: 0;
+        }
+        .alert.show {
+            display: block;
+            visibility: visible;
+            opacity: 1;
+        }
+        .password-checklist {
+            position: absolute;
+            left: 40px;
+            
+            top: 50px;
+            width: 200px;
+            padding: 10px;
+            background-color: hsla(0, 6%, 27%, 0.7);
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            transition: opacity 0.5s ease, transform 0.5s ease;
+            transform: translateY(20px);
+            z-index: -1;
+        }
+        .checklist-title {
+            font-size: 15px;
+            color: #fff;
+            margin-bottom: 10px;
+        }
+        .input:focus ~ .password-checklist {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .checklist {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .list-item {
+            padding-left: 30px;
+            color: #fff;
+            font-size: 14px;
+        }
+        .list-item::before {
+            content: '\f00d';
+            font-family: FontAwesome;
+            display: inline-block;
+            margin: 8px;
+            margin-left: -30px;
+            width: 20px;
+            font-size: 12px;
+        }
+        .list-item.checked {
+            color: #15ae2e;
+        }
+        .list-item.checked::before {
+            content: '\f00c';
+            font-family: FontAwesome;
+        }
+        .custum-file-upload {
+            height: 4px;
+            width: 7px;
+            display: flex;
+            flex-direction: column;
+            align-items: space-between;
+            gap: 3px;
+            cursor: pointer;
+            align-items: center;
+            justify-content: center;
+            border: 2px dashed #e8e8e8;
+            background-color: #212121;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0px 48px 35px -48px #e8e8e8;
+        }
+        .custum-file-upload .icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .custum-file-upload .icon svg {
+            height: 20px;
+            fill: #e8e8e8;
+        }
+        .custum-file-upload .text {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .custum-file-upload .text span {
+            font-weight: 10;
+            color: #e8e8e8;
+        }
+        .custum-file-upload input {
+            display: none;
+        }
+        .language-selection {
+            margin-top: 20px;
+        }
+        .language-selection label {
+            margin-right: 10px;
+            color: white;
+        }
+        .language-selection select {
+            padding: 5px;
+            border-radius: 5px;
+            border: none;
+            font-size: 16px;
+            background-color: #555;
+            color: white;
+        }
+        .fa-eye{
+            position: absolute;
+            top: 40%;
+            left: 90%;
+            color: #111010;
+            cursor: pointer;
+        }
+        .fa-eye-slash{
+            position: absolute;
+            top: 40%;
+            left: 90%;
+            color: #111010;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+
+<body>
+    <div class="form">
+        <div class="title">Bienvenue</div>
+        <div class="subtitle">Créons-nous votre compte!</div>
+
+        {% if message %}
+        <div id="message" class="alert show">{{ message }}</div>
+        {% else %}
+        <div id="message" class="alert"></div>
+        {% endif %}
+
+        <form action="/register" method="POST" enctype="multipart/form-data">
+            <div class="input-container ic1">
+                <input placeholder="" type="text" name="firstname" class="input" id="firstname">
+                <div class="cut"></div>
+                <label class="iLabel" for="firstname">Prenom</label>
+            </div>
+
+      <div class="input-container ic2">
+        <input placeholder="" type="text" name="lastname" class="input" id="lastname">
+        <div class="cut"></div>
+        <label class="iLabel" for="lastname">Nom</label>
+      </div>
+      <div class="input-container ic2">
+        <input placeholder="" type="text" name="username" class="input" id="username">
+        <div class="cut cut-short"></div>
+        <label class="iLabel" for="username">Nom d'utilisateur</label>
+      </div>
+      <div class="input-container ic2">
+        <input placeholder="" type="text" name="mail" class="input" id="email">
+        <div class="cut cut-short"></div>
+        <label class="iLabel" for="email">Email</label>
+      </div>
+      <div class="input-container ic1">
+        <input placeholder="" type="password" name="password" class="input" id="password" >
+        <i class="fa-solid fa-eye" id="show" ></i>
+        <div class="cut"></div>
+        <label class="iLabel" for="password">mot de passe</label>
+        <div class="password-checklist">
+            <div class="checklist-title">Password must contain:</div>
+            <ul class="checklist">
+                <li class="list-item" id="length">8-16 caractères</li>
+                <li class="list-item" id="uppercase">1  A-Z</li>
+                <li class="list-item" id="lowercase">1 a-z</li>
+                <li class="list-item" id="number">1 nombre</li>
+                <li class="list-item" id="special">1c aractère spécial</li>
+            </ul>
+        </div>
+    </div>
+    <div class="input-container ic2">
+        <input placeholder="" type="password" name="confirmPassword" class="input" id="confirmPassword" >
+        <div class="cut"></div>
+        <label class="iLabel" for="confirmPassword">Confirme password</label>
+    </div>
+    <br>
+    <span class="tooltip">photo</span>
+    <label for="file" class="custum-file-upload">
+    <div class="icon">
+    <svg viewBox="0 0 24 24" fill="" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill-rule="evenodd" clip-rule="evenodd" d="M10 1C9.73478 1 9.48043 1.10536 9.29289 1.29289L3.29289 7.29289C3.10536 7.48043 3 7.73478 3 8V20C3 21.6569 4.34315 23 6 23H7C7.55228 23 8 22.5523 8 22C8 21.4477 7.55228 21 7 21H6C5.44772 21 5 20.5523 5 20V9H10C10.5523 9 11 8.55228 11 8V3H18C18.5523 3 19 3.44772 19 4V9C19 9.55228 19.4477 10 20 10C20.5523 10 21 9.55228 21 9V4C21 2.34315 19.6569 1 18 1H10ZM9 7H6.41421L9 4.41421V7ZM14 15.5C14 14.1193 15.1193 13 16.5 13C17.8807 13 19 14.1193 19 15.5V16V17H20C21.1046 17 22 17.8954 22 19C22 20.1046 21.1046 21 20 21H13C11.8954 21 11 20.1046 11 19C11 17.8954 11.8954 17 13 17H14V16V15.5ZM16.5 11C14.142 11 12.2076 12.8136 12.0156 15.122C10.2825 15.5606 9 17.1305 9 19C9 21.2091 10.7909 23 13 23H20C22.2091 23 24 21.2091 24 19C24 17.1305 22.7175 15.5606 20.9844 15.122C20.7924 12.8136 18.858 11 16.5 11Z" fill=""></path> </g></svg>
+ 
+     </div>
+     <input type="file" id="file" name="file" accept="image/*" default="images/image_avatar.png">
+    </label>
+      
+      <table>
+      <tr>
+        <td>
+      <label for="languages">language:</label>
+      </td>
+      <td>
+    <div class="language-selection">
+      <select name="lg">
+        <option disabled selected value>choisir language</option>
+        <option value="en">English </option>
+        <option value="es">Spanish </option>
+        <option value="zh">Mandarin Chinese </option>
+        <option value="fr">frensh </option>
+        <option value="ar">Arabic </option>
+        <option value="bn">Bengali </option>
+        <option value="pt">Portuguese </option>
+        <option value="ru">Russian </option>
+        <option value="ja">Japanese</option>
+    </select>
+</div>
+    </td>
+    </tr>
+  </table>
+    <button class="submit" type="submit" name="action" value="inscrire" id="triggerError" id="submit">Inscrire</button>
+    
+    <button class="submit4"  name="action" value="login" >Connexion</button>
+  </div>
+  
+</form>
+
+    <script>
+       document.addEventListener("DOMContentLoaded", function () {
+    const passwordInput = document.getElementById("password");
+    const confirmPasswordInput = document.getElementById("confirmPassword");
+    const passwordChecklist = document.querySelector(".password-checklist");
+    const message = document.getElementById("message");
+    const form = document.querySelector('form');
+    const inscrireButton = document.querySelector('button[name="action"][value="inscrire"]');
+    const checklistItems = {
+        length: { element: document.getElementById("length"), regex: /^.{8,16}$/ },
+        uppercase: { element: document.getElementById("uppercase"), regex: /[A-Z]/ },
+        lowercase: { element: document.getElementById("lowercase"), regex: /[a-z]/ },
+        number: { element: document.getElementById("number"), regex: /\d/ },
+        special: { element: document.getElementById("special"), regex: /[^A-Za-z0-9]/ }
+    };
+
+    passwordInput.addEventListener("input", function (e) {
+       
+  
+        const password = passwordInput.value;
+
+        let allValid = true;
+        for (const key in checklistItems) {
+            const { element, regex } = checklistItems[key];
+            if (regex.test(password)) {
+                element.classList.add("checked");
+            } else {
+                element.classList.remove("checked");
+                allValid = false;
+            }
+        }
+
+        if (allValid) {
+            passwordChecklist.style.opacity = "0";
+        } else {
+            passwordChecklist.style.opacity = "1";
+        }
+      
+    });
+
+    function showMessage(messageText, duration = 3000) {
+        message.textContent = messageText;
+        message.classList.add("show");
+
+        setTimeout(() => {
+            message.classList.remove("show");
+        }, duration);
+    }
+
+    form.addEventListener("submit", function (e) {
+       
+        if (document.activeElement === inscrireButton) {
+            const password = passwordInput.value;
+            let allValid = true;
+
+            for (const key in checklistItems) {
+                const { regex } = checklistItems[key];
+                if (!regex.test(password)) {
+                    allValid = false;
+                    break;
+                }
+            }
+
+            if (!allValid) {
+                showMessage("Password does not meet the requirements");
+                e.preventDefault();
+            }
+
+            if (password !== confirmPasswordInput.value) {
+                showMessage("Passwords do not match");
+                e.preventDefault();
+            }
+        }
+        
+    });
+
+});
+    
+    let show=document.getElementById('show');
+    let pass=document.getElementById('password');
+    show.addEventListener("click",function(){
+        this.classList.toggle("fa-eye");
+        this.classList.toggle("fa-eye-slash");
+        const type= pass.getAttribute("type")=== "password"? "text":"password"
+        pass.setAttribute("type",type)
+    })
+
+    </script>
+</body>
+</html>

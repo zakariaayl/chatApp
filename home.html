@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-image: url('/static/images//back2.jpg'); 
+            background-size: cover; 
+            background-repeat: no-repeat; 
+            background-attachment: fixed; 
+            background-position: center; 
+            color: white; 
+        }
+
+.navbar {
+  overflow: hidden;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  display: flex; 
+  align-items: center;
+  padding: 0 20px; /* Adjusted padding for some spacing */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional: Add a subtle shadow for depth */
+  z-index: 1000; /* Ensure the navbar is on top */
+}
+
+        .navbar form {
+            display: flex;
+            justify-content: flex-end; 
+            align-items: center;
+        }
+
+        .btn {
+            width: 6.5em;
+            height: 2.3em;
+            margin: 0.5em;
+            background-color: rgba(21, 23, 43, 0.4);
+            color: white;
+            border: none;
+            border-radius: 0.625em;
+            font-size: 90%;
+            font-weight: bold;
+            cursor: pointer;
+            position: relative;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        button:hover {
+            color: black;
+        }
+
+        button:after {
+            content: "";
+            background: rgb(180, 167, 167);
+            position: absolute;
+            z-index: -1;
+            left: -20%;
+            right: -20%;
+            top: 0;
+            bottom: 0;
+            transform: skewX(-45deg) scale(0, 1);
+            transition: all 0.5s;
+        }
+
+        button:hover:after {
+            transform: skewX(-45deg) scale(1, 1);
+            -webkit-transition: all 0.5s;
+            transition: all 0.5s;
+        }
+
+        .content {
+            padding: 20px;
+            margin-top: 80px; 
+            display: flex; 
+            justify-content: center; 
+            align-items: flex-start; 
+        }
+
+        .text {
+            font-size: 20px;
+            color: #0a0a0a;
+            font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; 
+            line-height: 1.6;
+            margin: 10px 0;
+            padding: 20px; 
+        }
+
+        .image-container {
+            position: relative;
+            width: 40%;
+            margin-left: 20px;
+        }
+
+        .image-container img {
+            width: 100%; 
+            border-radius: 10px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            transition: opacity 1s;
+        }
+
+        .image-container img.active {
+            opacity: 1;
+        }
+        .text2{
+            color: aliceblue;
+            width: 100%;
+            padding: 20px;
+            background-color: rgba(212, 214, 233, 0.1);
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        h1{
+            size: 40px;
+            color:#0a0a0a;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <form action="/" method="POST">
+            <button type="submit" name="action" class="btn" value="login" onclick="loadlog()">Connexion</button>
+            <button type="submit" name="action" class="btn" value="register">Inscription</button>
+            <button class="btn"><a  class="text2" href="mailto:ChatApp@gmail.com">Contact</a></button>
+        </form>
+    </div>
+    <div class="content" id="mydiv">
+        <div class="text2">
+            <h1 color="black"><strong>Chat-App</strong></h1>
+            <p class="text">Bienvenue sur Chat-App, votre plateforme fiable pour
+                 une communication fluide et sécurisée. Que vous souhaitiez discuter avec des amis
+                  ou échanger des idées d'affaires, notre application offre une interface intuitive et des
+                   fonctionnalités avancées pour améliorer votre expérience de chat. Rejoignez-nous dès aujourd'hui et restez connecté !
+        </div>
+        <div class="image-container">
+            <img src="/static/images/im1.jpeg" alt="Image 1" class="active">
+            <img src="/static/images/OIF.jpeg" alt="Image 2">
+            <img src="/static/images/img2.jpeg" alt="Image 3">
+        </div>
+    </div>
+
+    <script>
+        let currentIndex = 0;
+        const images = document.querySelectorAll('.image-container img');
+        const totalImages = images.length;
+
+        function showNextImage() {
+            images[currentIndex].classList.remove('active');
+            currentIndex = (currentIndex + 1) % totalImages;
+            images[currentIndex].classList.add('active');
+        }
+
+        setInterval(showNextImage, 3000);
+    </script>
+    <script>
+        document.addEventListener("contextmenu",function(event){
+            alert("Inspect Elements Not allowed ");
+            event.preventDefault();
+        })
+    </script>
+</body>
+</html>
