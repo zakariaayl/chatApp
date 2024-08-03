@@ -1,0 +1,269 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; 
+  background-image: url('/static/images/back2.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
+  color: white;
+}
+
+.form {
+  /* left: 100%;
+  right: 0%;*/
+
+  background-color: rgba(184, 186, 208, 0.4); 
+  border-radius: 20px;
+  box-sizing: border-box;
+  height: 470px;
+  padding: 20px;
+  width: 320px;
+ 
+}
+
+.title {
+  color: #eee;
+  font-family: sans-serif;
+  font-size: 36px;
+  font-weight: 600;
+
+}
+
+.subtitle {
+  color: #eee;
+  font-family: sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  margin-top: 0px;
+}
+
+.input-container {
+  height: 50px;
+  position: relative;
+  width: 100%;
+}
+
+.ic1 {
+  margin-top: 40px;
+}
+
+.ic2 {
+  margin-top: 30px;
+}
+
+.input {
+  background-color: rgba(21, 23, 43, 0.4);
+  border-radius: 12px;
+  border: 0;
+  box-sizing: border-box;
+  color: #eee;
+  font-size: 18px;
+  height: 100%;
+  outline: 0;
+  padding: 20px;
+  width: 100%;
+}
+
+.input:focus ~ .cut, .input:not(:placeholder-shown) ~ .cut {
+  transform: translateY(8px);
+}
+
+.input:focus ~ .iLabel, .input:not(:placeholder-shown) ~ .iLabel {
+  transform: translateY(-30px) translateX(10px) scale(0.75);
+  color: #dc2f55;
+}
+
+.input:not(:focus) ~ .iLabel {
+  color: #808097;
+}
+
+.cut {
+  background-color: rgba(27, 29, 49, 0.1); 
+  border-radius: 10px;
+  height: 20px;
+  left: 20px;
+  position: absolute;
+  top: -20px;
+  transform: translateY(0);
+  transition: transform 200ms;
+  width: 110px;
+}
+
+.cut-short {
+  width: 50px;
+}
+
+.iLabel {
+  color: #65657b;
+  font-family: sans-serif;
+  left: 20px;
+  line-height: 14px;
+  pointer-events: none;
+  position: absolute;
+  transform-origin: 0 50%;
+  transition: transform 200ms, color 200ms;
+  top: 20px;
+}
+
+.submit {
+  background-color: #08d;
+  border-radius: 12px;
+  border: 0;
+  box-sizing: border-box;
+  color: #eee;
+  cursor: pointer;
+  font-size: 18px;
+  height: 50px;
+  margin-top: 8px;
+  text-align: center;
+  width: 100%;
+}
+
+.submit:active {
+  background-color: #06b;
+}
+.center {
+  text-align: center;
+}
+.alert {
+  display: none; 
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(255, 0, 0, 0.8); 
+  color: white; 
+  padding: 15px 20px;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  font-size: 16px;
+  z-index: 1000; 
+  transition: opacity 0.5s ease, visibility 0.5s ease;
+  visibility: hidden;
+  opacity: 0; 
+}
+
+.alert.show {
+  display: block;
+  visibility: visible; /* Show when .show class is added */
+  opacity: 1; /* Fully visible when .show class is added */
+}
+.card {
+  left:-60px;
+  width: 800px;
+  height: 500px;
+  border-width: 1px;
+  border-color: rgba(219, 234, 254, 1);
+  border-radius: 5px;
+  background-color: rgba(255, 255, 255, 1);
+  padding: 1rem;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  grid-gap: 1rem;
+  gap: 1rem;
+}
+
+.icon {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  background-color: rgba(96, 165, 250, 1);
+  padding: 0.5rem;
+  color: rgba(255, 255, 255, 1);
+}
+
+.icon svg {
+  height: 1rem;
+  width: 1rem;
+}
+
+.aler {
+  font-weight: 600;
+  color: rgba(107, 114, 128, 1);
+}
+
+.message {
+  margin-top: 1rem;
+  color: rgba(107, 114, 128, 1);
+}
+
+.actions {
+  margin-top: 1.5rem;
+}
+
+.actions a {
+  text-decoration: none;
+}
+
+.mark-as-read, .read {
+  display: inline-block;
+  border-radius: 0.5rem;
+  width: 100%;
+  padding: 0.75rem 1.25rem;
+  text-align: center;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 600;
+  top:70%;
+}
+
+.read {
+  position: absolute;
+  top:27rem;
+  right:0rem;
+  background-color: rgba(59, 130, 246, 1);
+  color: rgba(255, 255, 255, 1);
+}
+
+.mark-as-read {
+  margin-top: 0.5rem;
+  background-color: rgba(249, 250, 251, 1);
+  color: rgba(107, 114, 128, 1);
+  transition: all .15s ease;
+}
+
+.mark-as-read:hover {
+  background-color: rgb(230, 231, 233);
+}
+.closeButton {
+  border: none;
+  position: absolute;
+  top: 1rem; 
+  right: 1rem;
+  margin-left: 70%;
+  border-radius: 0.6rem;
+  font-size: 1rem;
+  height: 2rem;
+  width: 2rem;
+  display: flex;
+  place-items: center;
+  transition: background-color ease 0.25s;
+}
+.closeButton:hover {
+  background-color: rgba(230, 25, 25, 1);
+  color: white;
+}
+.fa-eye{
+  position: absolute;
+  top: 40%;
+  left: 90%;
+  color: #111010;
+  cursor: pointer;
+}
+.fa-eye-slash{
+  position: absolute;
+  top: 40%;
+  left: 90%;
+  color: #111010;
+  cursor: pointer;
+}
