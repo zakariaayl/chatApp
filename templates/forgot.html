@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    body{
+        background-color: #6a8484;
+        justify-content: center ;
+        align-items: center;
+        margin: auto;
+        background-image: url('/static/images/back2.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
+  color: white;
+}
+.form{
+    width:500px;
+    height:600px;
+    border-radius: 15px;
+    background-color: rgba(59, 52, 52, 0.248);
+    box-shadow: hsl(0, 39%, 42%);
+    margin: auto;
+    justify-content: center ;
+    align-items: center;
+    margin-top: 100px;
+}
+.input{
+    margin-left: 65px;
+    margin-top: 160PX;
+    width:70%;
+    height:50px;
+    border-radius: 15px;
+    border: none;
+}
+h1{
+    margin-left: 65px;
+    color: white;
+    top: 100px;
+}
+p{
+    position: absolute;
+    top: 250px;
+    margin-left: 15px;
+    font-size: 20px;
+}
+button{
+    background-color: rgb(127, 114, 97);
+    cursor: pointer;
+    margin-left:65px;
+    width:70%;
+    height:50px;
+    border-radius: 15px;
+    margin-top: 30px;
+    color: azure;
+    border: none;
+}
+.alert {
+  display: none; 
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(255, 0, 0, 0.8); 
+  color: white; 
+  padding: 15px 20px;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  font-size: 16px;
+  z-index: 1000; 
+ 
+   visibility: hidden; 
+  opacity: 0; 
+}
+.alert.show {
+  display: block;
+  visibility: visible;
+  opacity: 1; 
+}
+</style>
+<script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+            var alertMessage = document.querySelector('.alert.show');
+            if (alertMessage) {
+                setTimeout(() => {
+                    alertMessage.classList.remove('show');
+                }, 5000);
+            }
+        });
+</script>
+<body>
+    {% if message %}
+    <div id="message" class="alert show">{{ message }}</div>
+    {% else %}
+        <div id="message" class="alert"></div>
+    {% endif %}
+   <form action="" class="form" method="post"><br>
+    <h1>LET'S UPDATE YOUR PASSWORD</h1>
+    <p>entrer votre nom d'utilisateur</p>
+    <input name="user" class="input" ><br>
+    <button  name="send">send</button>
+ </form>
+</body>
+</html>
