@@ -1,0 +1,385 @@
+/* General Styles */
+body {
+  background-image: url('/static/images/back2.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
+  color: white;
+}
+
+
+.chat-container {
+  background-color: rgba(131, 134, 169, 0.3);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  height: calc(100vh - 60px); /* Adjust height to account for navbar */
+  margin-top: 60px; /* Adjust margin to account for navbar */
+}
+
+.user-list {
+  width: 20%;
+  border-right: 1px solid #ccc;
+  padding: 8px;
+  overflow-y: auto;
+}
+
+.search-bar {
+  background-color: rgba(131, 134, 169, 0.5);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.user {
+  display: flex;
+  align-items: center;
+  padding: 8px;
+  cursor: pointer;
+  border-bottom: 1px solid #ccc;
+}
+
+.user img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  margin-right: 8px;
+}
+
+.chat-window {
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+}
+
+.chat-header {
+  display: flex;
+  align-items: center;
+  padding: 8px;
+  border-bottom: 1px solid #ccc;
+}
+
+.chat-header img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 8px;
+}
+
+.chat-with {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.messages-area {
+  flex: 1;
+  padding: 8px;
+  overflow-y: auto;
+}
+
+.date-divider {
+  text-align: center;
+  font-size: 12px;
+  color: #333232;
+  margin: 16px 0;
+}
+
+.message {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 2px;
+}
+
+.sent {
+  align-items: flex-end;
+}
+
+.received {
+  align-items: flex-start;
+}
+
+.message-content {
+  max-width: 50%;
+  padding: 8px;
+  border-radius: 5px;
+  background-color: #f1f1f1;
+  font-size: 150%;
+}
+
+.sent .message-content {
+  background-color: #28a745; 
+}
+
+.received .message-content {
+  background-color: #007bff;
+}
+
+.message-timestamp {
+  font-size: 10px;
+  color: #665252ac;
+  margin-top: 4px;
+}
+
+.sender-area {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.input-place {
+  display: flex;
+  width: 90%;
+  margin-right:10px ;
+}
+
+/* Updated .messageBox Styles */
+.messageBox {
+   width: 100%;;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #2d2d2d;
+  padding: 0 15px;
+  border-radius: 10px;
+  border: 1px solid rgb(63, 63, 63);
+}
+
+.messageBox:focus-within {
+  border: 1px solid rgb(110, 110, 110);
+}
+
+/* Updated .fileUploadWrapper Styles */
+.fileUploadWrapper {
+  width: fit-content;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+#file {
+  display: none;
+}
+
+.fileUploadWrapper label {
+  cursor: pointer;
+  width: fit-content;
+  height: fit-content;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.fileUploadWrapper label svg {
+  height: 18px;
+}
+
+.fileUploadWrapper label svg path {
+  transition: all 0.3s;
+}
+
+.fileUploadWrapper label svg circle {
+  transition: all 0.3s;
+}
+
+.fileUploadWrapper label:hover svg path {
+  stroke: #fff;
+}
+
+.fileUploadWrapper label:hover svg circle {
+  stroke: #fff;
+  fill: #3c3c3c;
+}
+
+.fileUploadWrapper label:hover .tooltip {
+  display: block;
+  opacity: 1;
+}
+
+.tooltip {
+  position: absolute;
+  top: -40px;
+  display: none;
+  opacity: 0;
+  color: white;
+  font-size: 10px;
+  text-wrap: nowrap;
+  background-color: #000;
+  padding: 6px 10px;
+  border: 1px solid #3c3c3c;
+  border-radius: 5px;
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.596);
+  transition: all 0.3s;
+}
+
+#messageInput {
+  
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
+  outline: none;
+  border: none;
+  padding-left: 10px;
+  color: white;
+}
+
+#messageInput:focus ~ #sendButton svg path,
+#messageInput:valid ~ #sendButton svg path {
+  fill: #3c3c3c;
+  stroke: white;
+}
+
+#sendButton {
+  width: fit-content;
+  height: 100%;
+  background-color: transparent;
+  outline: none;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+#sendButton svg {
+  height: 18px;
+  transition: all 0.3s;
+}
+
+#sendButton svg path {
+  transition: all 0.3s;
+}
+
+#sendButton:hover svg path {
+  fill: #3c3c3c;
+  stroke: white;
+}
+
+/* Navbar Styles */
+.navbar1 {
+  overflow: hidden;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  background-color: rgba(21, 23, 43, 0.1);
+  box-shadow: #c9e60d;
+  height: 60px; /* Adjusted height */
+}
+
+.navbar1 .left,
+.navbar1 .right {
+  display: flex;
+  align-items: center;
+}
+
+.navbar1 .right {
+  margin-right: 25px; 
+}
+
+.btn-account {
+  width: 40px; 
+  height: 40px; 
+  background-color:  rgba(21, 23, 43, 0.1); 
+  margin: 0.5em;
+  border: none;
+  border-radius: 50%;
+  padding: 0;
+  overflow: hidden; 
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.language-selection {
+  width: auto;
+  position:absolute;
+  top:120px;
+  left:70%;
+}
+.language-selection label {
+  margin-right: 10px;
+  color: white;
+}
+.language-selection select {
+  padding: 2px;
+  width: 70px;
+  height:30px;
+  left:90%;
+  border-radius: 5px;
+  border: none;
+  font-size: 10px;
+  background-color: #555;
+  color: white;
+}
+.system{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.label{
+  position:absolute;
+  margin-right: 60px;
+  right: 100px;
+  border-radius: 20px;
+  width:50px;
+  height:30px;
+  background-color: rgb(246, 243, 243);
+}
+.dark{
+  margin-right: 100px;
+  visibility: hidden;
+}
+.circle{
+  position: absolute;
+  width: 26px;
+  height: 26px;
+  background-color: #141313;
+  border-radius: 50%;
+  top: 2px;
+  left: 2px;
+  animation: toggleOff .4s linear forwards;
+}
+
+.dark:checked + .label{
+  background-color: rgb(42, 41, 41);
+}
+.dark:checked + .label .circle{
+  background-color: rgb(239, 233, 233);
+  animation: toggleOn .4s linear forwards;
+}
+@keyframes toggleOn{
+  0%{
+      transform: translateX(0)
+  }
+  100%{
+    transform: translateX(20px)
+  }
+}
+@keyframes toggleOff{
+  0%{
+      transform: translateX(20px)
+  }
+  100%{
+    transform: translateX(0)
+  }
+}
+.account-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
