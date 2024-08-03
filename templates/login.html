@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>chat app</title>
+</head>
+<link rel="stylesheet" href="/static/style.css">
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+</head>
+<body>
+    
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        {% for category, message in messages %}
+            <div class="alert alert-{{ category }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+    {% endwith %}
+    <div class="form">
+        <div class="title">Chat App</div>
+        <div class="subtitle">Connectez-vous!</div>
+
+        <form action="" method="post" id="form">
+            <div class="input-container ic1">
+                <input placeholder="" type="text" name="username" class="input" id="username">
+                <div class="cut"></div>
+                <label class="iLabel" for="username">Nom d'utilisateurs</label>
+            </div>
+
+            <div class="input-container ic2">
+                <input placeholder="" type="password" name="password" class="input" id="password">
+                <i class="fa-solid fa-eye" id="show" ></i>
+                <div class="cut"></div>
+                <label class="iLabel" for="password">mot de passe</label>
+            </div>
+            <a href="http://192.168.11.104:5000/forgot">forgot password?</a>
+
+            <button class="submit" type="submit" name="action" value="login">Connexion</button>
+            <button class="submit" type="submit" name="action" value="inscription">inscription</button>
+        </form>
+        {% if message %}
+        <div id="message" class="alert show">{{ message }}</div>
+      {% else %}
+        <div id="message" class="alert"></div>
+      {% endif %}
+    </div>
+    {% if  msg %}
+    <div class="card">
+       <div class="header">
+         <span class="icon">
+           <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+             <path clip-rule="evenodd" d="M18 3a1 1 0 00-1.447-.894L8.763 6H5a3 3 0 000 6h.28l1.771 5.316A1 1 0 008 18h1a1 1 0 001-1v-4.382l6.553 3.276A1 1 0 0018 15V3z" fill-rule="evenodd"></path>
+           </svg>
+         </span>
+         <p class="aler">New message!</p>
+         <input type="button" value="x" class="closeButton" onclick="func()"/>
+         
+       </div>
+     
+       <p class="message">
+         {{msg}}
+       </p>
+     
+       <div class="actions">
+         <a class="read" href="http://127.0.0.1:5000/login/Y">
+           resend
+         </a>
+     
+         
+       </div>
+    </div>
+   {% endif %}
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script>
+        // document.addEventListener("contextmenu", function(event) {
+        //     alert("Inspect Elements Not allowed");
+        //     event.preventDefault();
+        // });
+
+        window.addEventListener('DOMContentLoaded', (event) => {
+    var alertMessage = document.querySelector('.alert.show');
+    if (alertMessage) {
+        setTimeout(() => {
+            alertMessage.classList.remove('show');
+        }, 5000); 
+    }
+    var msg ="{{msg}}";
+        var form = document.querySelector('.form');
+         if (msg) {
+                form.style.opacity = "0";
+        } else {
+                form.style.opacity = "1";
+        }
+      });
+    login=document.querySelector('.form')
+    function func(){
+       
+        window.location.href='/login/N'
+    }   
+    let show=document.getElementById('show');
+    let pass=document.getElementById('password');
+    show.addEventListener("click",function(){
+        this.classList.toggle("fa-eye");
+        this.classList.toggle("fa-eye-slash");
+        const type= pass.getAttribute("type")=== "password"? "text":"password"
+        pass.setAttribute("type",type)
+    })
+    </script>
+</body>
+</html>
