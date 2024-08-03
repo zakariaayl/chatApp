@@ -1,4 +1,4 @@
-REM Install required packages
+
 pip install Flask
 pip install Flask-SocketIO
 pip install SQLAlchemy
@@ -11,5 +11,5 @@ pip install python-dotenv
 pip install Flask-Mail
 pip install pymysql
 pip install flask_sqlalchemy
-REM Run the Flask application
+
 python app.py
