@@ -506,7 +506,13 @@ def handle_message(data):
         sender = session.get('username')
         recipient = session.get('name')
         msg = data.get('message')
-
+        if not sender or not recipient:
+            logging.error(f"Sender or recipient is not set in the session. Sender: {sender}, Recipient: {recipient}")
+            return
+        
+        if not msg:
+            logging.error("Message content is missing.")
+            return
         # Batch database queries
         users = User.query.filter(User.username.in_([sender, recipient])).all()
         lg1, lg2 = None, None
