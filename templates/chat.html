@@ -210,8 +210,9 @@
     messageElement.addClass(msg.sender === "{{ username }}" ? 'sent' : 'received');
     messageElement.find('.message-content').text(msg.message).css('font-size', '20px');
     messageElement.find('.message-timestamp').text(msg.timestamp).css('font-size', '10px');
+    console.log('before appending:', messageElement);
     messages.append(messageElement);
-    
+    console.log('Appended message:', messageElement);
     scrollToBottom();
     update(); 
 });
