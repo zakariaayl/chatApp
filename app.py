@@ -500,50 +500,55 @@ def handle_disconnect():
 
 @socketio.on('message')
 def handle_message(data):
-    sender = session.get('username')
-    recipient = session.get('name')
-    msg = data.get('message')
+    try:
+    # Existing code for message handling
 
-    # Batch database queries
-    users = User.query.filter(User.username.in_([sender, recipient])).all()
-    lg1, lg2 = None, None
-    for user in users:
-        if user.username == sender:
-            lg1 = user.lang
-        elif user.username == recipient:
-            lg2 = user.lang
+        sender = session.get('username')
+        recipient = session.get('name')
+        msg = data.get('message')
 
-    if lg1 and lg2:
-        if lg1 == lg2:
-            trans_msg = trans_msg2 = msg
-        else:
-            trans_msg = GoogleTranslator(source=lg1, target=lg2).translate(msg)
-            trans_msg2 = GoogleTranslator(source=lg2, target=lg1).translate(msg)
+        # Batch database queries
+        users = User.query.filter(User.username.in_([sender, recipient])).all()
+        lg1, lg2 = None, None
+        for user in users:
+            if user.username == sender:
+                lg1 = user.lang
+            elif user.username == recipient:
+                lg2 = user.lang
 
-        new_message = Message(content=msg, sender=sender, recipient=recipient)
-        db.session.add(new_message)
-        db.session.commit()
+        if lg1 and lg2:
+            if lg1 == lg2:
+                trans_msg = trans_msg2 = msg
+            else:
+                trans_msg = GoogleTranslator(source=lg1, target=lg2).translate(msg)
+                trans_msg2 = GoogleTranslator(source=lg2, target=lg1).translate(msg)
 
-        timestamp = new_message.timestamp.strftime('%H:%M')
-        date = new_message.timestamp.strftime('%d %B')
+            new_message = Message(content=msg, sender=sender, recipient=recipient)
+            db.session.add(new_message)
+            db.session.commit()
 
-        message_data = {
-            'message': trans_msg,
-            'sender': sender,
-            'timestamp': timestamp,
-            'date': date
-        }
-        message_data2 = {
-            'message': trans_msg2,
-            'sender': sender,
-            'timestamp': timestamp,
-            'date': date
-        }
+            timestamp = new_message.timestamp.strftime('%H:%M')
+            date = new_message.timestamp.strftime('%d %B')
 
-        send(message_data2, room=sender)
-        send(message_data, room=recipient)
+            message_data = {
+                'message': trans_msg,
+                'sender': sender,
+                'timestamp': timestamp,
+                'date': date
+            }
+            message_data2 = {
+                'message': trans_msg2,
+                'sender': sender,
+                'timestamp': timestamp,
+                'date': date
+            }
 
-        print(f"Message from {sender} to {recipient}: {msg} at {timestamp} on {date}")
+            send(message_data2, room=sender)
+            send(message_data, room=recipient)
+
+            print(f"Message from {sender} to {recipient}: {msg} at {timestamp} on {date}")
+    except Exception as e:
+            logging.error(f"Error handling message: {e}")
 @socketio.on('join')
 def on_join(data):
     username = session.get('username')
