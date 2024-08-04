@@ -196,21 +196,26 @@
     });
 
     socket.on('message', function (msg) {
-        console.log('Received message:', msg); 
-        if (msg.date !== lastDate) {
-            var dateElement = $('<div class="date-divider"></div>').text(msg.date);
-            messages.append(dateElement);
-            lastDate = msg.date;
-        }
+    console.log('Received message:', msg); 
+    if (!msg || !msg.message || !msg.sender || !msg.timestamp || !msg.date) {
+        console.error('Invalid message data:', msg);
+        return;
+    }
+    if (msg.date !== lastDate) {
+        var dateElement = $('<div class="date-divider"></div>').text(msg.date);
+        messages.append(dateElement);
+        lastDate = msg.date;
+    }
+    var messageElement = $('<div class="message"><div class="message-content"></div><div class="small"><div class="message-timestamp"></div></div></div>');
+    messageElement.addClass(msg.sender === "{{ username }}" ? 'sent' : 'received');
+    messageElement.find('.message-content').text(msg.message).css('font-size', '20px');
+    messageElement.find('.message-timestamp').text(msg.timestamp).css('font-size', '10px');
+    messages.append(messageElement);
+    
+    scrollToBottom();
+    update(); 
+});
 
-        var messageElement = $('<div class="message"><div class="message-content"></div><div class="small"><div class="message-timestamp"></div></div></div>');
-        messageElement.addClass(msg.sender === "{{ username }}" ? 'sent' : 'received');
-        messageElement.find('.message-content').text(msg.message).css('font-size', '20px');
-        messageElement.find('.message-timestamp').text(msg.timestamp).css('font-size', '10px');
-        messages.append(messageElement);
-        scrollToBottom();
-        update(); // Call update to apply the correct styles for dark mode
-    });
 
     socket.on('image', function (img) {
         console.log('Received message:', img); 
