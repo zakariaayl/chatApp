@@ -1,3 +1,5 @@
+import eventlet
+eventlet.monkey_patch()
 from flask import Flask, render_template, request, redirect, url_for, session, flash, jsonify
 from flask_socketio import SocketIO, send, join_room, leave_room, emit
 from sqlalchemy import select, desc,or_, and_
@@ -21,10 +23,12 @@ import random
 
 
 
+
+
 app = Flask(__name__)
 app.config.from_object(config)
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
-socketio = SocketIO(app)
+socketio = SocketIO(app, async_mode='eventlet')
 db.init_app(app)
 
 
@@ -498,40 +502,47 @@ def handle_message(data):
     sender = session.get('username')
     recipient = session.get('name')
     msg = data.get('message')
-    # lg1=User.query.filter_by(username=session.get('username')).first().lang
-    # lg2=User.query.filter_by(username=session.get('name')).first().lang
-    # trans_msg=GoogleTranslator(source=lg1, target=lg2).translate(msg)
-    # trans_msg2=GoogleTranslator(source=lg2, target=lg1).translate(msg)
-    # if 'th' in session:
-    #     trans_msg2=GoogleTranslator(source='th', target=session.get('lg1')).translate(msg)
-    #     # trans_msg=GoogleTranslator(source='th', target=session.get('lg2')).translate(msg)
-    if lg2== lg1:
-        trans_msg2=GoogleTranslator(source='th', target=lg1).translate(msg)
-        trans_msg=GoogleTranslator(source='th', target=lg2).translate(msg)
-    new_message = Message(content=msg, sender=sender, recipient=recipient)
-    db.session.add(new_message)
-    db.session.commit()
-    timestamp = new_message.timestamp.strftime('%H:%M')
-    date = new_message.timestamp.strftime('%d %B')
 
-    message_data = {
-        'message': trans_msg,
-        'sender': sender,
-        'timestamp': timestamp,
-        'date': date
-    }
-    message_data2 = {
-        'message': trans_msg2,
-        'sender': sender,
-        'timestamp': timestamp,
-        'date': date
-    }
-    
+    # Batch database queries
+    users = User.query.filter(User.username.in_([sender, recipient])).all()
+    lg1, lg2 = None, None
+    for user in users:
+        if user.username == sender:
+            lg1 = user.lang
+        elif user.username == recipient:
+            lg2 = user.lang
 
-    send(message_data2, room=sender)
-    send(message_data, room=recipient)
-    print(f"Message from {sender} to {recipient}: {msg} at {timestamp} on {date}")
+    if lg1 and lg2:
+        if lg1 == lg2:
+            trans_msg = trans_msg2 = msg
+        else:
+            trans_msg = GoogleTranslator(source=lg1, target=lg2).translate(msg)
+            trans_msg2 = GoogleTranslator(source=lg2, target=lg1).translate(msg)
 
+        new_message = Message(content=msg, sender=sender, recipient=recipient)
+        db.session.add(new_message)
+        db.session.commit()
+
+        timestamp = new_message.timestamp.strftime('%H:%M')
+        date = new_message.timestamp.strftime('%d %B')
+
+        message_data = {
+            'message': trans_msg,
+            'sender': sender,
+            'timestamp': timestamp,
+            'date': date
+        }
+        message_data2 = {
+            'message': trans_msg2,
+            'sender': sender,
+            'timestamp': timestamp,
+            'date': date
+        }
+
+        send(message_data2, room=sender)
+        send(message_data, room=recipient)
+
+        print(f"Message from {sender} to {recipient}: {msg} at {timestamp} on {date}")
 @socketio.on('join')
 def on_join(data):
     username = session.get('username')
