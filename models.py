@@ -13,7 +13,7 @@ class User(db.Model):
     password_hash = db.Column(db.String(300), nullable=False)
     actif = db.Column(db.Boolean, default=False)
     lang=db.Column(db.String(10), unique=False,default='en')
-    img = db.Column(db.Text(16000000), nullable=True)
+    img = db.Column(db.Text, nullable=True)
 
     messages_sent = db.relationship('Message', foreign_keys='Message.sender', backref='sender_user', lazy='dynamic')
     messages_received = db.relationship('Message', foreign_keys='Message.recipient', backref='recipient_user', lazy='dynamic')

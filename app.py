@@ -338,7 +338,15 @@ def chat(name):
         if user_img:
             # print(user_img)
             user_img_data = f"data:image/png;base64,{user_img}"
-        return render_template('chat.html', username=username, messages=messages_list, users=friend_list, reciver=name,user2=user2_img_data,user=user_img_data)
+            if user_2.img:
+                return render_template('chat.html', username=username, messages=messages_list, users=friend_list, reciver=name,user2=user2_img_data,user=user_img_data)
+            else:
+                return render_template('chat.html', username=username, messages=messages_list, users=friend_list, reciver=name,user=user_img_data)
+        else:
+            if user_2.img:
+                return render_template('chat.html', username=username, messages=messages_list, users=friend_list, reciver=name,user2=user2_img_data)
+            else:
+                return render_template('chat.html', username=username, messages=messages_list, users=friend_list, reciver=name)
 
 
 
