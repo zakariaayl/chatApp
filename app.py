@@ -505,36 +505,31 @@ def handle_message(data):
     # if 'th' in session:
     #     trans_msg2=GoogleTranslator(source='th', target=session.get('lg1')).translate(msg)
     #     # trans_msg=GoogleTranslator(source='th', target=session.get('lg2')).translate(msg)
-    # if lg2== lg1:
-    #     trans_msg2=GoogleTranslator(source='th', target=lg1).translate(msg)
-    #     trans_msg=GoogleTranslator(source='th', target=lg2).translate(msg)
+    if lg2== lg1:
+        trans_msg2=GoogleTranslator(source='th', target=lg1).translate(msg)
+        trans_msg=GoogleTranslator(source='th', target=lg2).translate(msg)
     new_message = Message(content=msg, sender=sender, recipient=recipient)
     db.session.add(new_message)
     db.session.commit()
     timestamp = new_message.timestamp.strftime('%H:%M')
     date = new_message.timestamp.strftime('%d %B')
 
-    # message_data = {
-    #     'message': trans_msg,
-    #     'sender': sender,
-    #     'timestamp': timestamp,
-    #     'date': date
-    # }
-    # message_data2 = {
-    #     'message': trans_msg2,
-    #     'sender': sender,
-    #     'timestamp': timestamp,
-    #     'date': date
-    # }
-    message_data_with_nothing = {
-        'message': msg,
+    message_data = {
+        'message': trans_msg,
         'sender': sender,
         'timestamp': timestamp,
         'date': date
     }
+    message_data2 = {
+        'message': trans_msg2,
+        'sender': sender,
+        'timestamp': timestamp,
+        'date': date
+    }
+    
 
-    send(message_data_with_nothing, room=sender)
-    send(message_data_with_nothing, room=recipient)
+    send(message_data2, room=sender)
+    send(message_data, room=recipient)
     print(f"Message from {sender} to {recipient}: {msg} at {timestamp} on {date}")
 
 @socketio.on('join')
