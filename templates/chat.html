@@ -158,8 +158,13 @@
         });
         displayUsers(filteredUsers);
     });
-
-    var socket = io();
+    var connectionOptions =  {
+            "force new connection" : true,
+            "reconnectionAttempts": "Infinity", 
+            "timeout" : 10000, 
+            "transports" : ["websocket"]
+    };
+    var socket = io('https://chatappp-lre0.onrender.com/',connectionOptions);
     var messageInput = $('#messageInput');
     var messageForm = $('#messageForm');
     var messages = $('#messages');
@@ -191,6 +196,7 @@
     });
 
     socket.on('message', function (msg) {
+        console.log('Received message:', msg); 
         if (msg.date !== lastDate) {
             var dateElement = $('<div class="date-divider"></div>').text(msg.date);
             messages.append(dateElement);
@@ -207,6 +213,7 @@
     });
 
     socket.on('image', function (img) {
+        console.log('Received message:', img); 
         if (img.date !== lastDate) {
             var dateElement = $('<div class="date-divider"></div>').text(img.date);
             messages.append(dateElement);
@@ -222,6 +229,7 @@
     });
 
     socket.on('pdf', function (pdf) {
+        console.log('Received message:', pdf); 
         if (pdf.date !== lastDate) {
             var dateElement = $('<div class="date-divider"></div>').text(pdf.date);
             messages.append(dateElement);

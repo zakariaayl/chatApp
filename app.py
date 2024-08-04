@@ -28,13 +28,14 @@ import random
 app = Flask(__name__)
 app.config.from_object(config)
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
-socketio = SocketIO(app, async_mode='eventlet')
+logging.basicConfig(level=logging.INFO)
+socketio = SocketIO(app, async_mode='eventlet', logger=True, engineio_logger=True)
 db.init_app(app)
 
 
 user_sessions = {}
 
-logging.basicConfig(level=logging.INFO)
+
 
 
 
