@@ -498,37 +498,43 @@ def handle_message(data):
     sender = session.get('username')
     recipient = session.get('name')
     msg = data.get('message')
-    lg1=User.query.filter_by(username=session.get('username')).first().lang
-    lg2=User.query.filter_by(username=session.get('name')).first().lang
-    trans_msg=GoogleTranslator(source=lg1, target=lg2).translate(msg)
-    trans_msg2=GoogleTranslator(source=lg2, target=lg1).translate(msg)
+    # lg1=User.query.filter_by(username=session.get('username')).first().lang
+    # lg2=User.query.filter_by(username=session.get('name')).first().lang
+    # trans_msg=GoogleTranslator(source=lg1, target=lg2).translate(msg)
+    # trans_msg2=GoogleTranslator(source=lg2, target=lg1).translate(msg)
     # if 'th' in session:
     #     trans_msg2=GoogleTranslator(source='th', target=session.get('lg1')).translate(msg)
     #     # trans_msg=GoogleTranslator(source='th', target=session.get('lg2')).translate(msg)
-    if lg2== lg1:
-        trans_msg2=GoogleTranslator(source='th', target=lg1).translate(msg)
-        trans_msg=GoogleTranslator(source='th', target=lg2).translate(msg)
+    # if lg2== lg1:
+    #     trans_msg2=GoogleTranslator(source='th', target=lg1).translate(msg)
+    #     trans_msg=GoogleTranslator(source='th', target=lg2).translate(msg)
     new_message = Message(content=msg, sender=sender, recipient=recipient)
     db.session.add(new_message)
     db.session.commit()
     timestamp = new_message.timestamp.strftime('%H:%M')
     date = new_message.timestamp.strftime('%d %B')
 
-    message_data = {
-        'message': trans_msg,
-        'sender': sender,
-        'timestamp': timestamp,
-        'date': date
-    }
-    message_data2 = {
-        'message': trans_msg2,
+    # message_data = {
+    #     'message': trans_msg,
+    #     'sender': sender,
+    #     'timestamp': timestamp,
+    #     'date': date
+    # }
+    # message_data2 = {
+    #     'message': trans_msg2,
+    #     'sender': sender,
+    #     'timestamp': timestamp,
+    #     'date': date
+    # }
+    message_data_with_nothing = {
+        'message': msg,
         'sender': sender,
         'timestamp': timestamp,
         'date': date
     }
 
-    send(message_data2, room=sender)
-    send(message_data, room=recipient)
+    send(message_data_with_nothing, room=sender)
+    send(message_data_with_nothing, room=recipient)
     print(f"Message from {sender} to {recipient}: {msg} at {timestamp} on {date}")
 
 @socketio.on('join')
