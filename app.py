@@ -20,12 +20,17 @@ from mtranslate import translate
 import logging
 import string
 import random
+from flask_cors import CORS
+
+
+
 
 
 
 
 
 app = Flask(__name__)
+CORS(app, resources={r"/*": {"origins": "*"}})
 app.config.from_object(config)
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
 logging.basicConfig(level=logging.INFO)

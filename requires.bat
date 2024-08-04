@@ -12,3 +12,4 @@ pymysql
 flask_sqlalchemy
 psycopg2
 eventlet
+flask_cors
