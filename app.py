@@ -1,5 +1,5 @@
-import eventlet
-eventlet.monkey_patch()
+from gevent import monkey
+monkey.patch_all()
 from flask import Flask, render_template, request, redirect, url_for, session, flash, jsonify
 from flask_socketio import SocketIO, send, join_room, leave_room, emit
 from sqlalchemy import select, desc,or_, and_
@@ -34,7 +34,7 @@ CORS(app, resources={r"/*": {"origins": "*"}})
 app.config.from_object(config)
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
 logging.basicConfig(level=logging.INFO)
-socketio = SocketIO(app, async_mode='eventlet', logger=True, engineio_logger=True)
+socketio = SocketIO(app, logger=True,async_mode='gevent', engineio_logger=True)
 db.init_app(app)
 
 
