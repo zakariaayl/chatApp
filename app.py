@@ -149,7 +149,7 @@ def register():
             return render_template("register.html", message=" ".join(errors))
         
         if not User.query.filter_by(username=username).first():
-            #verify(email,'email.html',0)
+            verify(email,'email.html',0)
             new_user = User(username=username)
             new_user.email = email.lower()
             new_user.FirstName = FirstName.capitalize()
