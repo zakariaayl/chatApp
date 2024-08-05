@@ -618,33 +618,55 @@ def handle_pdf(data):
         except Exception as e:
             print(f"Error saving PDF: {e}")
 
-def verify(email,html,code):
-    em = MIMEMultipart()
-    em['From'] = 'ayougilzakaria@gmail.com'
-    email_pass = 'zwgp yrpp hnvl fugp'
-    em['To'] = email
-    session['email'] = em['To']
-    with open("C:/Users/ayoug/OneDrive/Documents/GitHub/ChatApp/static/images/im.png", "rb") as image_file:
-        base64_string = base64.b64encode(image_file.read()).decode('utf-8')
+logging.basicConfig(filename='email_errors.log', level=logging.ERROR,
+                    format='%(asctime)s - %(levelname)s - %(message)s')
 
-# Display the base64 string
-    
-    token = generate_token(em['To'])
-    em['Subject'] = 'Verify your account'
-    html_content = render_template(html,token=token,user=session.get('username'),img=base64_string,password=code)
-    html_part = MIMEText(html_content, 'html')
-    # body = f'Congrats you are now registered in our chat app. Please verify your email by clicking on http://127.0.0.1/confirm/{token}'
-    em.attach(html_part)
-    context = ssl.create_default_context()
-    with smtplib.SMTP_SSL('smtp.gmail.com', context=context) as smtp:
-        smtp.login(em['From'], email_pass)
-        smtp.sendmail(em['From'], em['To'], em.as_string())
+def verify(email, html, code):
+    try:
+        em = MIMEMultipart()
+        em['From'] = 'ayougilzakaria@gmail.com'
+        email_pass = 'zwgp yrpp hnvl fugp'
+        em['To'] = email
+        session['email'] = em['To']
+        
+        # Read image file and encode it to base64
+        try:
+            with open("C:/Users/ayoug/OneDrive/Documents/GitHub/ChatApp/static/images/im.png", "rb") as image_file:
+                base64_string = base64.b64encode(image_file.read()).decode('utf-8')
+        except Exception as e:
+            logging.error("Error reading or encoding the image file: %s", e)
+            return "Error: Unable to process image file."
+
+        # Generate the token and prepare email content
+        token = generate_token(em['To'])
+        em['Subject'] = 'Verify your account'
+        html_content = render_template(html, token=token, user=session.get('username'), img=base64_string, password=code)
+        html_part = MIMEText(html_content, 'html')
+        em.attach(html_part)
+
+        # Send the email
+        try:
+            context = ssl.create_default_context()
+            with smtplib.SMTP_SSL('smtp.gmail.com', context=context) as smtp:
+                smtp.login(em['From'], email_pass)
+                smtp.sendmail(em['From'], em['To'], em.as_string())
+        except Exception as e:
+            logging.error("Error sending email: %s", e)
+            return "Error: Unable to send email."
+
+    except Exception as e:
+        logging.error("Unexpected error in verify function: %s", e)
+        return "Error: An unexpected error occurred."
 
 def generate_token(email):
-    token = secrets.token_urlsafe()
-    combined = f"{email}:{token}"
-    encoded = base64.urlsafe_b64encode(combined.encode()).decode()
-    return encoded
+    try:
+        token = secrets.token_urlsafe()
+        combined = f"{email}:{token}"
+        encoded = base64.urlsafe_b64encode(combined.encode()).decode()
+        return encoded
+    except Exception as e:
+        logging.error("Error generating token: %s", e)
+        return None
 
 def decode_token(token):
     try:
@@ -652,6 +674,7 @@ def decode_token(token):
         email, token_value = decoded.split(':')
         return email
     except Exception as e:
+        logging.error("Error decoding token: %s", e)
         return None
 
 
