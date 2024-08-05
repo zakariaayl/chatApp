@@ -307,7 +307,7 @@ def chat(name):
     
     start_time = time.time()
     contents=[message.content for message in messages]
-    unique_delimiter= "<--hak-->"
+    unique_delimiter= "<--z-->"
     y = unique_delimiter.join(contents)
     print(y)
     # if lg1==lg2:
@@ -318,7 +318,7 @@ def chat(name):
         contents_trans = GoogleTranslator(source='th', target=lg1).translate(y)
     print(contents_trans)
     print(".............")
-    contents_trans = contents_trans.replace("< --hak-->", unique_delimiter).replace("<- -hak-->", unique_delimiter).replace("<-- hak-->", unique_delimiter).replace("<--h ak-->", unique_delimiter).replace("<--ha k-->", unique_delimiter).replace("<--hak -->", unique_delimiter).replace("<--hak- ->", unique_delimiter).replace("<--hak-- >", unique_delimiter)
+    contents_trans = contents_trans.replace("< --z-->", unique_delimiter).replace("<- -z-->", unique_delimiter).replace("<-- z-->", unique_delimiter).replace("<--z -->", unique_delimiter).replace("<--z- ->", unique_delimiter).replace("<--z-- >", unique_delimiter)
     # print(".............")
     # print(contents_trans)
     t = contents_trans.split(unique_delimiter)
