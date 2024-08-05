@@ -11,5 +11,6 @@ Flask-Mail
 pymysql
 flask_sqlalchemy
 psycopg2
-eventlet
+gevent
+gevent-websocket
 flask_cors
