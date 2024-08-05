@@ -66,7 +66,7 @@ def home():
 def login(var):
  if var=='Y':
      email=session['email']
-    #  verify(email,'email.html')
+     verify(email,'email.html')
      return redirect(url_for("login",var='N'))
  else :
     if 'message'not in session and 'msg' not in session:
@@ -149,7 +149,7 @@ def register():
             return render_template("register.html", message=" ".join(errors))
         
         if not User.query.filter_by(username=username).first():
-            # verify(email,'email.html',0)
+             verify(email,'email.html',0)
             new_user = User(username=username)
             new_user.email = email.lower()
             new_user.FirstName = FirstName.capitalize()
