@@ -66,7 +66,7 @@ def home():
 def login(var):
  if var=='Y':
      email=session['email']
-     verify(email,'email.html')
+     verify(email,'email.html',0)
      return redirect(url_for("login",var='N'))
  else :
     if 'message'not in session and 'msg' not in session:
@@ -204,7 +204,7 @@ def forgot():
         print("Strong Password: ", password)
         user_db.set_password(password)
         db.session.commit()
-        #verify(user_db.email,'pass.html',password)
+        verify(user_db.email,'pass.html',password)
         print('the email is send succesifuly')
         return render_template('forgot.html',message="the email is send succesifuly")
     else:
