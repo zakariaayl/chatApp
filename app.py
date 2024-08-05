@@ -507,7 +507,7 @@ def handle_disconnect():
 def handle_message(data):
     try:
     # Existing code for message handling
-
+        print('Message received:', data)
         sender = session.get('username')
         recipient = session.get('name')
         msg = data.get('message')
@@ -554,8 +554,10 @@ def handle_message(data):
                 'date': date
             }
 
-            send(message_data2, room=sender)
-            send(message_data, room=recipient)
+            # send(message_data2, room=sender)
+            # send(message_data, room=recipient)
+            emit('message', message_data2, room=sender)
+            emit('message', message_data, room=recipient)
 
             print(f"Message from {sender} to {recipient}: {msg} at {timestamp} on {date}")
     except Exception as e:
