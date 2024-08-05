@@ -12,6 +12,4 @@ pymysql
 flask_sqlalchemy
 psycopg2
 eventlet
-smtplib
-logging
 flask_cors
