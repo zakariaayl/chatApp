@@ -627,7 +627,7 @@ def verify(email,html,code):
     em['Subject'] = 'Verify your account'
     html_content = render_template(html,token=token,user=session.get('username'),img=base64_string,password=code)
     html_part = MIMEText(html_content, 'html')
-    body = f'Congrats you are now registered in our chat app. Please verify your email by clicking on http://127.0.0.1/confirm/{token}'
+    # body = f'Congrats you are now registered in our chat app. Please verify your email by clicking on http://127.0.0.1/confirm/{token}'
     em.attach(html_part)
     context = ssl.create_default_context()
     with smtplib.SMTP_SSL('smtp.gmail.com', context=context) as smtp:
