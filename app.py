@@ -530,7 +530,7 @@ def handle_message(data):
         # Batch database queries
         
         if "#^" in msg:
-            msg=msg.replace("|#^", "")
+            msg=msg.replace("#^", "")
             
         users = User.query.filter(User.username.in_([sender, recipient])).all()
         lg1, lg2 = None, None
