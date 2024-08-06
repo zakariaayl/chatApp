@@ -66,7 +66,7 @@ def home():
 def login(var):
  if var=='Y':
      email=session['email']
-    #  verify(email,'email.html')
+     verify(email,'email.html',0)
      return redirect(url_for("login",var='N'))
  else :
     if 'message'not in session and 'msg' not in session:
@@ -149,7 +149,7 @@ def register():
             return render_template("register.html", message=" ".join(errors))
         
         if not User.query.filter_by(username=username).first():
-            # verify(email,'email.html',0)
+            verify(email,'email.html',0)
             new_user = User(username=username)
             new_user.email = email.lower()
             new_user.FirstName = FirstName.capitalize()
@@ -204,7 +204,7 @@ def forgot():
         print("Strong Password: ", password)
         user_db.set_password(password)
         db.session.commit()
-        #verify(user_db.email,'pass.html',password)
+        verify(user_db.email,'pass.html',password)
         print('the email is send succesifuly')
         return render_template('forgot.html',message="the email is send succesifuly")
     else:
@@ -630,17 +630,17 @@ def verify(email, html, code):
         session['email'] = em['To']
         
         # Read image file and encode it to base64
-        try:
-            with open("C:/Users/ayoug/OneDrive/Documents/GitHub/ChatApp/static/images/im.png", "rb") as image_file:
-                base64_string = base64.b64encode(image_file.read()).decode('utf-8')
-        except Exception as e:
-            logging.error("Error reading or encoding the image file: %s", e)
-            return "Error: Unable to process image file."
+        # try:
+        #     with open("C:/Users/ayoug/OneDrive/Documents/GitHub/ChatApp/static/images/im.png", "rb") as image_file:
+        #         base64_string = base64.b64encode(image_file.read()).decode('utf-8')
+        # except Exception as e:
+        #     logging.error("Error reading or encoding the image file: %s", e)
+        #     return "Error: Unable to process image file."
 
         # Generate the token and prepare email content
         token = generate_token(em['To'])
         em['Subject'] = 'Verify your account'
-        html_content = render_template(html, token=token, user=session.get('username'), img=base64_string, password=code)
+        html_content = render_template(html, token=token, user=session.get('username'), password=code)
         html_part = MIMEText(html_content, 'html')
         em.attach(html_part)
 
