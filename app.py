@@ -309,7 +309,7 @@ def chat(name):
     
     start_time = time.time()
     contents=[message.content for message in messages]
-    unique_delimiter= "|#^"
+    unique_delimiter= "#^"
     y = unique_delimiter.join(contents)
     print(y)
     # if lg1==lg2:
@@ -321,8 +321,9 @@ def chat(name):
     print(contents_trans)
     print(".............")
     variations = [
-    "| # ^", " |#^", "| #^", "|#^ ", "| #^", "|# ^", "|#^  ", " | #^", "| #^ ", "|# ^ ", " | # ^ ", " |# ^ ", "| # ^ ", " | # ^", " | # ^", "| # ^", "|#^", "| #^", "|#^ "," #^"," |.#^"
+    "# ^", " #^", "#^ ", " # ^", "# ^ ", " #^ ", "# ^", "#^", " #^ ", "# ^ ", " # ^", " # ^ ", " # ^", "# ^", "#^", "# ^", "#^", " #^", "#^ ", " #^", "#^", " .#^", " #.^"
 ]
+
 
     for var in variations:
         contents_trans = contents_trans.replace(var, unique_delimiter)
@@ -527,6 +528,10 @@ def handle_message(data):
             logging.error("Message content is missing.")
             return
         # Batch database queries
+        
+        if "#^" in msg:
+            msg=msg.replace("|#^", "")
+            
         users = User.query.filter(User.username.in_([sender, recipient])).all()
         lg1, lg2 = None, None
         for user in users:

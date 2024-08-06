@@ -89,7 +89,7 @@
                 <div class="message {{ 'sent' if message.sender == username else 'received' }}">
                     <div class="message-content">
                         {% if message.img %}
-                        <img src="{{ message.img }}" style="max-width: 200px;">
+                        <img src="{{ message.img }}" style="max-width: 100%;">
                         {% elif message.pdf %}
                         <a href="{{ message.pdf }}" target="_blank">View PDF</a>
                         {% else %}
@@ -226,7 +226,7 @@
             lastDate = img.date;
         }
 
-        var imageElement = $('<div class="message"><div class="message-content"><img src="' + img.img + '" style="max-width: 200px;"/></div><div class="small"><div class="message-timestamp"></div></div></div>');
+        var imageElement = $('<div class="message"><div class="message-content"><img src="' + img.img + '" style="max-width: 100%;"/></div><div class="small"><div class="message-timestamp"></div></div></div>');
         imageElement.addClass(img.sender === "{{ username }}" ? 'sent' : 'received');
         imageElement.find('.message-timestamp').text(img.timestamp).css('font-size', '10px');
         messages.append(imageElement);

@@ -7,3 +7,11 @@ test="bonjour:-#bonjour:-#y a-t-il un problème:-#bonjour:-#:-#bonjour:-#bonjour
 print("............")
 t=test.split(":-#")
 print(t)
+def contains_special_sequence(message, sequence="|#^"):
+    return sequence in message
+print(".............")
+# Example usage
+message = " test message|#^ hhgciih kh"
+if "|#^" in message:
+    message=message.replace("|#^", "")
+    print(message)
