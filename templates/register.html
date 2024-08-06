@@ -27,7 +27,7 @@
             background-color: rgba(131, 134, 169, 0.4);
             border-radius: 20px;
             box-sizing: border-box;
-            height: 570px;
+            height: 630px;
             padding: 20px;
             width: 320px;
             margin: auto;
@@ -160,23 +160,26 @@
         }
         .password-checklist {
             position: absolute;
-            left: 40px;
+            left: 60px;
             
             top: 50px;
             width: 200px;
+            height: 160px;
             padding: 10px;
-            background-color: hsla(0, 6%, 27%, 0.7);
+            background-color: hsla(0, 1%, 16%, 0.934);
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
             opacity: 0;
             transition: opacity 0.5s ease, transform 0.5s ease;
             transform: translateY(20px);
-            z-index: -1;
+            /* z-index: -1; */
         }
         .checklist-title {
-            font-size: 15px;
-            color: #fff;
-            margin-bottom: 10px;
+            font-size: 18px;
+            color: #ffffff;
+            margin-bottom: 25px;
+            margin-top: -17px;
+            z-index: 1;
         }
         .input:focus ~ .password-checklist {
             opacity: 1;
@@ -341,7 +344,7 @@
      </div>
      <input type="file" id="file" name="file" accept="image/*" default="images/image_avatar.png">
     </label>
-      
+      <br><br>
       <table>
       <tr>
         <td>
