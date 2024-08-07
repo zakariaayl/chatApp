@@ -3,14 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>chat app</title>
-</head>
-<link rel="stylesheet" href="/static/style.css">
-<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <title>Chat App</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
 </head>
 <body>
-    
     {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
         {% for category, message in messages %}
@@ -33,7 +32,7 @@
 
             <div class="input-container ic2">
                 <input placeholder="" type="password" name="password" class="input" id="password">
-                <i class="fa-solid fa-eye" id="show" ></i>
+                <i class="fa-solid fa-eye" id="show"></i>
                 <div class="cut"></div>
                 <label class="iLabel" for="password">mot de passe</label>
             </div>
@@ -42,13 +41,15 @@
             <button class="submit" type="submit" name="action" value="login">Connexion</button>
             <button class="submit" type="submit" name="action" value="inscription">inscription</button>
         </form>
+        {% if not pop %}
         {% if message %}
         <div id="message" class="alert show">{{ message }}</div>
-      {% else %}
+        {% else %}
         <div id="message" class="alert"></div>
-      {% endif %}
+        {% endif %}
+        {% endif %}
     </div>
-    {% if  msg %}
+    {% if msg %}
     <div class="card">
        <div class="header">
          <span class="icon">
@@ -58,61 +59,69 @@
          </span>
          <p class="aler">New message!</p>
          <input type="button" value="x" class="closeButton" onclick="func()"/>
-         
        </div>
-     
        <p class="message">
          {{msg}}
        </p>
-     
        <div class="actions">
          <a class="read" href="https://chatappp-lre0.onrender.com/login/Y">
            resend
          </a>
-     
-         
        </div>
     </div>
-   {% endif %}
-   
+    {% endif %}
+    {% if pop %}
+    <div class="notificationCard show">
+      <p class="notificationHeading">Check your email</p>
+      <div class="close"><svg xmlns="http://www.w3.org/2000/svg" width="20" viewBox="0 0 20 20" height="20"><path fill="#393a37" d="m15.8333 5.34166-1.175-1.175-4.6583 4.65834-4.65833-4.65834-1.175 1.175 4.65833 4.65834-4.65833 4.6583 1.175 1.175 4.65833-4.6583 4.6583 4.6583 1.175-1.175-4.6583-4.6583z"></path></svg></div>
+  <svg class="bellIcon" viewBox="0 0 448 512"><path d="M224 0c-17.7 0-32 14.3-32 32V51.2C119 66 64 130.6 64 208v18.8c0 47-17.3 92.4-48.5 127.6l-7.4 8.3c-8.4 9.4-10.4 22.9-5.3 34.4S19.4 416 32 416H416c12.6 0 24-7.4 29.2-18.9s3.1-25-5.3-34.4l-7.4-8.3C401.3 319.2 384 273.9 384 226.8V208c0-77.4-55-142-128-156.8V32c0-17.7-14.3-32-32-32zm45.3 493.3c12-12 18.7-28.3 18.7-45.3H224 160c0 17 6.7 33.3 18.7 45.3s28.3 18.7 45.3 18.7s33.3-6.7 45.3-18.7z"></path></svg>
+ 
+  <p class="notificationPara">{{message}}, if there is no email click on</p>
+  <div class="buttonContainer">
+    <a href="https://chatappp-lre0.onrender.com/login/Y" class="AllowBtn">Resend</a>
+  </div>
+</div>
+
+    {% endif %}
     <!-- Bootstrap JS and dependencies -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <script>
-        // document.addEventListener("contextmenu", function(event) {
-        //     alert("Inspect Elements Not allowed");
-        //     event.preventDefault();
-        // });
-
         window.addEventListener('DOMContentLoaded', (event) => {
-    var alertMessage = document.querySelector('.alert.show');
-    if (alertMessage) {
-        setTimeout(() => {
-            alertMessage.classList.remove('show');
-        }, 5000); 
-    }
-    var msg ="{{msg}}";
-        var form = document.querySelector('.form');
-         if (msg) {
+            var alertMessage = document.querySelector('.alert.show');
+            if (alertMessage) {
+                setTimeout(() => {
+                    alertMessage.classList.remove('show');
+                }, 5000); 
+            }
+            var msg = "{{msg}}";
+            var form = document.querySelector('.form');
+            if (msg) {
                 form.style.opacity = "0";
-        } else {
+            } else {
                 form.style.opacity = "1";
+            }
+        });
+
+        function func(){
+            window.location.href='/login/N'
         }
-      });
-    login=document.querySelector('.form')
-    function func(){
-       
-        window.location.href='/login/N'
-    }   
-    let show=document.getElementById('show');
-    let pass=document.getElementById('password');
-    show.addEventListener("click",function(){
-        this.classList.toggle("fa-eye");
-        this.classList.toggle("fa-eye-slash");
-        const type= pass.getAttribute("type")=== "password"? "text":"password"
-        pass.setAttribute("type",type)
-    })
+
+        let show = document.getElementById('show');
+        let pass = document.getElementById('password');
+        show.addEventListener("click", function() {
+            this.classList.toggle("fa-eye");
+            this.classList.toggle("fa-eye-slash");
+            const type = pass.getAttribute("type") === "password" ? "text" : "password";
+            pass.setAttribute("type", type);
+        });
+        let notifcard=document.querySelector(".notificationCard.show")
+        let closenotifcard=document.querySelector(".close")
+        var pop="{{pop}}"
+         closenotifcard.addEventListener("click",()=>{
+          notifcard.classList.remove("show")
+         })
     </script>
 </body>
 </html>
