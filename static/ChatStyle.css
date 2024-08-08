@@ -383,3 +383,18 @@ body {
   object-fit: cover;
   border-radius: 50%;
 }
+.account-img-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.online-indicator {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  width: 12px;
+  height: 12px;
+  background-color: green;
+  border-radius: 50%;
+  display: none; 
+}

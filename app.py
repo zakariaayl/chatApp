@@ -701,7 +701,11 @@ def decode_token(token):
     except Exception as e:
         logging.error("Error decoding token: %s", e)
         return None
-
+@socketio.on('disconnect')
+def handle_disconnect():
+    username = session.get('username')
+    if username:
+        emit('user_disconnected', {'username': username}, broadcast=True)
 
 
 if __name__ == '__main__':
