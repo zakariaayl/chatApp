@@ -324,7 +324,9 @@
                     <i class="fas fa-sign-out-alt"></i>
                 </button>
             </form>
-            <button class="btn-account"><a href="javascript:window.history.back();window.location.reload();" calss="btn-account">
+            <button class="btn-account"><a href="javascript:window.history.back();setTimeout(function() {
+        window.location.reload(); 
+    }, 10);" calss="btn-account">
                 <i class="fa-solid fa-circle-arrow-left"></i>
                 </a>
             </button>
