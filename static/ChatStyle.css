@@ -1,6 +1,6 @@
 /* General Styles */
 body {
-  /* background-image: url('/static/images/back2.jpg'); */
+  background-image: url('/static/images/back2.jpg');
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;

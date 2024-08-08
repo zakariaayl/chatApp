@@ -1,4 +1,4 @@
-from gevent import monkey
+from gevent import monkey # type: ignore
 monkey.patch_all()
 from flask import Flask, render_template, request, redirect, url_for, session, flash, jsonify
 from flask_socketio import SocketIO, send, join_room, leave_room, emit
@@ -40,6 +40,22 @@ db.init_app(app)
 
 user_sessions = {}
 
+
+
+# Error handler for 400 Bad Request
+@app.errorhandler(400)
+def bad_request_error(error):
+    return redirect(url_for('home', error='400'))
+
+# Error handler for 404 Not Found
+@app.errorhandler(404)
+def not_found_error(error):
+    return redirect(url_for('home', error='404'))
+
+# Error handler for 500 Internal Server Error
+@app.errorhandler(500)
+def internal_server_error(error):
+    return redirect(url_for('home', error='500'))
 
 
 
