@@ -462,7 +462,7 @@ body {
 @media (max-width:409px){
     .online-indicator {
   position: absolute;
-   top: 22%;/*hdchi dial tele 14% top 76% right */
+   top: 20%;/*hdchi dial tele 14% top 76% right */
   right: 62%;
   width: 15px;
   height:15px;
@@ -473,7 +473,7 @@ body {
 }@media (max-width:362px){
     .online-indicator {
   position: absolute;
-   top: 19%;/*hdchi dial tele 14% top 76% right */
+   top: 16%;/*hdchi dial tele 14% top 76% right */
   right: 60%;
   width: 15px;
   height:15px;
