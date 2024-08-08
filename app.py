@@ -80,6 +80,7 @@ def login(var):
                         session["username"] = username
                         return redirect(url_for("fetch_users"))
                     elif user and user.check_password(password) and not user.actif:
+                        
                         return render_template("login.html", message="you're email is not actif check your email to activate you're account",pop="1")
                     else:
                         return render_template("login.html", message="Invalid username or password")
