@@ -390,7 +390,7 @@ body {
 
 .online-indicator {
   position: absolute;
-   top: 16%;/*hdchi dil pc 14% top 76% right */
+   top: 18%;/*hdchi dil pc 14% top 76% right */
   right: 75%;
   width: 15px;
   height: 15px;
@@ -462,7 +462,7 @@ body {
 @media (max-width:409px){
     .online-indicator {
   position: absolute;
-   top: 20%;/*hdchi dial tele 14% top 76% right */
+   top: 19%;/*hdchi dial tele 14% top 76% right */
   right: 62%;
   width: 15px;
   height:15px;
@@ -473,7 +473,7 @@ body {
 }@media (max-width:362px){
     .online-indicator {
   position: absolute;
-   top: 16%;/*hdchi dial tele 14% top 76% right */
+   top: 15%;/*hdchi dial tele 14% top 76% right */
   right: 60%;
   width: 15px;
   height:15px;
