@@ -648,6 +648,7 @@ logging.basicConfig(filename='email_errors.log', level=logging.ERROR,
 def verify(email, html, code):
     try:
         em = MIMEMultipart()
+        em.add_header('Content-Type', 'text/html')
         em['From'] = 'ayougilzakaria@gmail.com'
         email_pass = 'zwgp yrpp hnvl fugp'
         em['To'] = email
