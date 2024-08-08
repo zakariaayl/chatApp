@@ -324,9 +324,9 @@
                     <i class="fas fa-sign-out-alt"></i>
                 </button>
             </form>
-            <button class="btn-account"><a href="javascript:window.history.back();window.location.reload();" calss="btn-account">
+            <button class="btn-account"onclick="goBackAndRefresh()">
                 <i class="fa-solid fa-circle-arrow-left"></i>
-                </a>
+                
             </button>
         </div>
         <div class="right">
@@ -375,6 +375,16 @@
                 userContainer.append(row);
             });
         })
+        window.addEventListener('DOMContentLoaded', (event) => {
+    if (sessionStorage.getItem('refreshPage') === 'true') {
+        sessionStorage.removeItem('refreshPage'); 
+        window.location.reload(); 
+    }
+});
+        function goBackAndRefresh() {
+            sessionStorage.setItem('refreshPage', 'true');
+            window.history.back(); 
+        }
         </script>
     </body>
 </html>
