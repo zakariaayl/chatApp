@@ -56,10 +56,11 @@
             <div class="chat-header">
                 {% if user2 %}
                 <img src="{{ user2 }}" alt="UserImg" id="img">
-                {% else %}
-                <img src="/static/images/image_avatar.png" alt="UserImg" id="img">
-                {% endif %}
                 <div class="online-indicator" id="onlineIndicator"></div>
+                {% else %}
+                <img src="/static/images/image_avatar.png" alt="UserImg" id="img"><div class="online-indicator" id="onlineIndicator"></div>
+                {% endif %}
+                <!-- <div class="online-indicator" id="onlineIndicator"></div> -->
                 <span class="chat-with">Chat with {{ reciver }}</span>
             </div>
             <form action="" method="POST">

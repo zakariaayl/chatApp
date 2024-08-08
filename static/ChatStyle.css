@@ -390,11 +390,96 @@ body {
 
 .online-indicator {
   position: absolute;
-  bottom: 5px;
-  right: 5px;
-  width: 12px;
-  height: 12px;
+   top: 14%;/*hdchi dil pc 14% top 76% right */
+  right: 76%;
+  width: 15px;
+  height: 15px;
   background-color: green;
   border-radius: 50%;
   display: none; 
+}
+@media (max-width:1198px){
+ .online-indicator {
+  position: absolute;
+   top: 22%;/*hdchi dial tele 14% top 76% right */
+  right: 74%;
+  width: 15px;
+  height:15px;
+  background-color: green;
+  border-radius: 50%;
+  
+}
+}
+@media (max-width:870px){
+ .online-indicator {
+  position: absolute;
+   top: 22%;/*hdchi dial tele 14% top 76% right */
+  right: 71%;
+  width: 15px;
+  height:15px;
+  background-color: green;
+  border-radius: 50%;
+  
+}
+}
+@media (max-width:700px){
+ .online-indicator {
+  position: absolute;
+   top: 22%;/*hdchi dial tele 14% top 76% right */
+  right: 70%;
+  width: 15px;
+  height:15px;
+  background-color: green;
+  border-radius: 50%;
+
+}
+}
+
+@media (max-width:560px){
+ .online-indicator {
+  position: absolute;
+   top: 22%;/*hdchi dial tele 14% top 76% right */
+  right: 68%;
+  width: 15px;
+  height:15px;
+  background-color: green;
+  border-radius: 50%;
+   
+}
+}
+@media (max-width:454px){
+ .online-indicator {
+  position: absolute;
+   top: 22%;/*hdchi dial tele 14% top 76% right */
+  right: 66%;
+  width: 15px;
+  height:15px;
+  background-color: green;
+  border-radius: 50%;
+  
+}
+}
+@media (max-width:409px){
+    .online-indicator {
+  position: absolute;
+   top: 22%;/*hdchi dial tele 14% top 76% right */
+  right: 62%;
+  width: 15px;
+  height:15px;
+  background-color: green;
+  border-radius: 50%;
+   
+}
+}@media (max-width:362px){
+    .online-indicator {
+  position: absolute;
+   top: 22%;/*hdchi dial tele 14% top 76% right */
+  right: 60%;
+  width: 15px;
+  height:15px;
+  background-color: green;
+  border-radius: 50%;
+   
+}
+
 }
