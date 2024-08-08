@@ -390,8 +390,8 @@ body {
 
 .online-indicator {
   position: absolute;
-   top: 14%;/*hdchi dil pc 14% top 76% right */
-  right: 76%;
+   top: 16%;/*hdchi dil pc 14% top 76% right */
+  right: 75%;
   width: 15px;
   height: 15px;
   background-color: green;
@@ -473,7 +473,7 @@ body {
 }@media (max-width:362px){
     .online-indicator {
   position: absolute;
-   top: 22%;/*hdchi dial tele 14% top 76% right */
+   top: 19%;/*hdchi dial tele 14% top 76% right */
   right: 60%;
   width: 15px;
   height:15px;

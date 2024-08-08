@@ -254,7 +254,7 @@
 
     socket.on('connect', function () {
         console.log('Connected to server');
-        document.getElementById('onlineIndicator').style.display = 'block';
+        // document.getElementById('onlineIndicator').style.display = 'block';
         socket.emit('join', { username: "{{ username }}", room: "default_room" });
     });
 
@@ -332,7 +332,16 @@ socket.on('disconnect', function () {
             });
         }
     }
-
+    socket.on('user_status', function(data) {
+    if (data.username === "{{ reciver }}") {
+        const onlineIndicator = document.getElementById('onlineIndicator');
+        if (data.status === 'online') {
+            onlineIndicator.style.display = 'block';
+        } else {
+            onlineIndicator.style.display = 'none';
+        }
+    }
+});
     function savedark() {
         localStorage.setItem('darkMode', darkmode.checked ? 'enabled' : 'disabled');
     }

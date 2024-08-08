@@ -592,15 +592,7 @@ def handle_message(data):
             print(f"Message from {sender} to {recipient}: {msg} at {timestamp} on {date}")
     except Exception as e:
             logging.error(f"Error handling message: {e}")
-@socketio.on('join')
-def on_join(data):
-    username = session.get('username')
-    room = data['room']
-    join_room(room)
-    user_sessions[username] = request.sid
-    message = f"{username} en ligne."
-    print(message)
-    emit('user_joined', {'msg': message}, room=room)
+
 
 @socketio.on('image')
 def handle_image(data):
@@ -701,11 +693,22 @@ def decode_token(token):
     except Exception as e:
         logging.error("Error decoding token: %s", e)
         return None
+users_online = {}
+
+@socketio.on('join')
+def on_join(data):
+    username = data['username']
+    room = data['room']
+    join_room(room)
+    users_online[username] = True
+    emit('user_status', {'username': username, 'status': 'online'}, room=room)
+
 @socketio.on('disconnect')
-def handle_disconnect():
+def on_disconnect():
     username = session.get('username')
-    if username:
-        emit('user_disconnected', {'username': username}, broadcast=True)
+    if username in users_online:
+        del users_online[username]
+        emit('user_status', {'username': username, 'status': 'offline'}, broadcast=True)
 
 
 if __name__ == '__main__':
