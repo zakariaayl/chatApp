@@ -5,7 +5,7 @@ body {
   justify-content: center;
   align-items: center;
   height: 70vh;
-  /* background-image: url('/static/images/download.jpeg'); */
+  background-image: url('/static/images/download.jpg');
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;
