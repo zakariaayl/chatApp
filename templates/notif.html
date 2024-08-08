@@ -375,12 +375,7 @@
                 userContainer.append(row);
             });
         })
-        window.addEventListener('DOMContentLoaded', (event) => {
-    if (sessionStorage.getItem('refreshPage') === 'true') {
-        sessionStorage.removeItem('refreshPage'); 
-        window.location.reload(); 
-    }
-});
+        
         function goBackAndRefresh() {
             sessionStorage.setItem('refreshPage', 'true');
             window.history.back(); 
