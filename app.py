@@ -338,7 +338,7 @@ def chat(name):
     print(contents_trans)
     print(".............")
     variations = [
-    "# ^", " #^", "#^ ", " # ^", "# ^ ", " #^ ", "# ^", "#^", " #^ ", "# ^ ", " # ^", " # ^ ", " # ^", "# ^", "#^", "# ^", "#^", " #^", "#^ ", " #^", "#^", " .#^", " #.^"
+    "# ^", " #^", "#^ ", " # ^", "# ^ ", " #^ ", "# ^", "#^", " #^ ", "# ^ ", " # ^", " # ^ ", " # ^", "# ^", "#^", "# ^", "#^", " #^", "#^ ", " #^", "#^", " .#^", " #.^","^#",
 ]
 
 
@@ -639,25 +639,18 @@ logging.basicConfig(filename='email_errors.log', level=logging.ERROR,
 
 def verify(email, html, code):
     try:
-        em = MIMEMultipart()
-        em.add_header('Content-Type', 'text/html')
+        em = MIMEMultipart('alternative')
         em['From'] = 'ayougilzakaria@gmail.com'
         email_pass = 'zwgp yrpp hnvl fugp'
         em['To'] = email
         session['email'] = em['To']
-        
-        # Read image file and encode it to base64
-        # try:
-        #     with open("C:/Users/ayoug/OneDrive/Documents/GitHub/ChatApp/static/images/im.png", "rb") as image_file:
-        #         base64_string = base64.b64encode(image_file.read()).decode('utf-8')
-        # except Exception as e:
-        #     logging.error("Error reading or encoding the image file: %s", e)
-        #     return "Error: Unable to process image file."
 
         # Generate the token and prepare email content
         token = generate_token(em['To'])
         em['Subject'] = 'Verify your account'
         html_content = render_template(html, token=token, user=session.get('username'), password=code)
+        
+        # Attach the HTML content as a MIMEText object
         html_part = MIMEText(html_content, 'html')
         em.attach(html_part)
 
