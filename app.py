@@ -342,7 +342,7 @@ def chat(name):
 
     for var in variations:
         contents_trans = contents_trans.replace(var, unique_delimiter)
-
+    contents_trans=contents_trans.replace("##^^", "#^#^")
     # print(".............")
     # print(contents_trans)
     t = contents_trans.split(unique_delimiter)
