@@ -337,7 +337,7 @@ def chat(name):
         contents_trans = GoogleTranslator(source='th', target=lg1).translate(y)
     print(contents_trans)
     print(".............")
-    variations = ["# ^", " #^", "#^ ", " # ^", "# ^ ", " #^ ", "# ^", "#^", " #^ ", "# ^ ", " # ^", " # ^ ", " # ^", "# ^", "#^", "# ^", "#^", " #^", "#^ ", " #^", "#^", " .#^", " #.^", "^#"]
+    variations = ["# ^", " #^", "#^ ", " # ^", "# ^ ", " #^ ", "# ^", "#^", " #^ ", "# ^ ", " # ^", " # ^ ", " # ^", " # ^", "# ^ ", "#^", "#^ ", "#^", " .#^", " #.^", "^#","# ^"," ^#"]
 
 
     for var in variations:
@@ -351,9 +351,9 @@ def chat(name):
     print(f"Number messages: {len(messages)}")
     print(f"Number of t: {len(t)}")
     print(messages)
-    print(".............")
+    print(".............splite trans")
     print(t)
-    print(".............")
+    print(".............content_trans")
     print(contents_trans)
     print(".............")
     
