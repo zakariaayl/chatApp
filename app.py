@@ -345,6 +345,7 @@ def chat(name):
         contents_trans = contents_trans.replace(var, unique_delimiter)
     # ®
     contents_trans=contents_trans.replace("##^^", "#^#^")
+    contents_trans=contents_trans.replace("##^#^^", "#^#^#^")
     # contents_trans=contents_trans.replace("", "*")
     # print(".............")
     # print(contents_trans)
@@ -358,7 +359,9 @@ def chat(name):
     print(".............t li mfer9a")
     print(t)
     print(".............content_trans_khassykon_nady")
+    
     print(contents_trans)
+    
     print(".............")
     
     if len(messages) != len(t):
