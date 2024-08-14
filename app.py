@@ -328,6 +328,7 @@ def chat(name):
     contents=[message.content for message in messages]
     unique_delimiter= "#^"
     y = unique_delimiter.join(contents)
+    y=y.replace("*","")
     print(y)
     # if lg1==lg2:
     print(".............")
@@ -336,13 +337,15 @@ def chat(name):
     if lg1==lg2:
         contents_trans = GoogleTranslator(source='th', target=lg1).translate(y)
     print(contents_trans)
-    print(".............")
+    print(".............kifach ja")
     variations = ["# ^", " #^", "#^ ", " # ^", "# ^ ", " #^ ", "# ^", "#^", " #^ ", "# ^ ", " # ^", " # ^ ", " # ^", " # ^", "# ^ ", "#^", "#^ ", "#^", " .#^", " #.^", "^#","# ^"," ^#"]
 
 
     for var in variations:
         contents_trans = contents_trans.replace(var, unique_delimiter)
+    # ®
     contents_trans=contents_trans.replace("##^^", "#^#^")
+    # contents_trans=contents_trans.replace("", "*")
     # print(".............")
     # print(contents_trans)
     t = contents_trans.split(unique_delimiter)
@@ -350,10 +353,11 @@ def chat(name):
         t=""
     print(f"Number messages: {len(messages)}")
     print(f"Number of t: {len(t)}")
+    print("...........messages")
     print(messages)
-    print(".............splite trans")
+    print(".............t li mfer9a")
     print(t)
-    print(".............content_trans")
+    print(".............content_trans_khassykon_nady")
     print(contents_trans)
     print(".............")
     
