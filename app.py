@@ -20,6 +20,7 @@ from mtranslate import translate
 import logging
 import string
 import random
+import re
 from flask_cors import CORS
 
 
@@ -274,84 +275,81 @@ def update_profile():
 # Chat functionality
 @app.route('/chat/<name>', methods=["GET", "POST"])
 def chat(name):
-    session["back"]="chat"
+    session["back"] = "chat"
     if request.method == "POST":
         action = request.form.get('action')
         if action == 'account':
-            return  redirect(url_for("update_profile"))
+            return redirect(url_for("update_profile"))
         elif action == 'deconnexion':
             del session['username']
-            session['message']="vous ête déconnecter!!"
-            return redirect(url_for("login",var='N'))
-        elif action=='notif':
+            session['message'] = "vous ête déconnecter!!"
+            return redirect(url_for("login", var='N'))
+        elif action == 'notif':
             return redirect(url_for("notif"))
-        
-    
+
     if "username" not in session:
-        return redirect(url_for('login',var='N'))
-    
+        return redirect(url_for('login', var='N'))
+
     if not name:
         return redirect(url_for('fetch_users'))
-    
+
     if session.get('username') == name:
         return redirect(url_for('fetch_users'))
-    
+
     session['name'] = name
     username = session["username"]
     messages = Message.query.filter(
         ((Message.sender == username) & (Message.recipient == name)) |
         ((Message.sender == name) & (Message.recipient == username))
     ).order_by(Message.timestamp).all()
-    
-    # users = User.query.all()
+
     friends = db.session.query(User).join(Friendship, or_(
             and_(Friendship.friend == User.username, Friendship.user == username),
-            and_(Friendship.user == User.username, Friendship.friend ==username)
+            and_(Friendship.user == User.username, Friendship.friend == username)
         )
     ).filter(Friendship.accepted == True).all()
-    friend_list = [{"name": user.username,"lang":user.lang,"img":user.img} for user in friends if user.username != session.get('username')]
+
+    friend_list = [{"name": user.username, "lang": user.lang, "img": user.img} for user in friends if user.username != session.get('username')]
     user = User.query.filter_by(username=session.get('username')).first()
-    lang_update=request.form.get('lg')
-    if  lang_update:
-        user.lang=lang_update
+    
+    lang_update = request.form.get('lg')
+    if lang_update:
+        user.lang = lang_update
         db.session.commit()
-    user_2=User.query.filter_by(username=name).first()
-    lg2=user_2.lang
-    session['lg2']=lg2
-    lg1=User.query.filter_by(username=session.get('username')).first().lang
-    session['lg1']=lg1
-    
-    #     session['lg1']=lang_update
-    #    
-    
+
+    user_2 = User.query.filter_by(username=name).first()
+    lg2 = user_2.lang
+    session['lg2'] = lg2
+    lg1 = User.query.filter_by(username=session.get('username')).first().lang
+    session['lg1'] = lg1
+
     start_time = time.time()
-    contents=[message.content for message in messages]
-    unique_delimiter= "#^"
+    contents = [message.content for message in messages]
+    unique_delimiter = "<-mg->"
     y = unique_delimiter.join(contents)
-    y=y.replace("*","")
-    print(y)
-    # if lg1==lg2:
-    print(".............")
-    contents_trans = GoogleTranslator(source=lg2, target=lg1).translate(y)
     
-    if lg1==lg2:
+   
+    y = y.replace("*", "")
+
+    print(y)  
+    if lg1 == lg2:
         contents_trans = GoogleTranslator(source='th', target=lg1).translate(y)
-    print(contents_trans)
+    else:
+        contents_trans = GoogleTranslator(source=lg2, target=lg1).translate(y)
+
+    print(contents_trans)  
+    
     print(".............kifach ja")
-    variations = ["# ^", " #^", "#^ ", " # ^", "# ^ ", " #^ ", "# ^", "#^", " #^ ", "# ^ ", " # ^", " # ^ ", " # ^", " # ^", "# ^ ", "#^", "#^ ", "#^", " .#^", " #.^", "^#","# ^"," ^#"]
 
+    contents_trans = re.sub(r'\s*<-\s*mg\s*->\s*', '<-mg->', contents_trans)
 
-    for var in variations:
-        contents_trans = contents_trans.replace(var, unique_delimiter)
-    # ®
-    contents_trans=contents_trans.replace("##^^", "#^#^")
-    contents_trans=contents_trans.replace("##^#^^", "#^#^#^")
-    # contents_trans=contents_trans.replace("", "*")
-    # print(".............")
-    # print(contents_trans)
+    contents_trans = re.sub(r'(<-mg->)+', lambda m: m.group(0).replace("<-mg->", "<-mg->*"), contents_trans)
+
     t = contents_trans.split(unique_delimiter)
-    if len(messages)==0 :
-        t=""
+
+    if len(messages) == 0:
+        t = ""
+
     print(f"Number messages: {len(messages)}")
     print(f"Number of t: {len(t)}")
     print("...........messages")
@@ -359,35 +357,46 @@ def chat(name):
     print(".............t li mfer9a")
     print(t)
     print(".............content_trans_khassykon_nady")
-    
     print(contents_trans)
-    
     print(".............")
-    
+
+   
     if len(messages) != len(t):
-        return "Error: The number of translated messages does not match the number of original messages."
-    else:
+        t.extend([""] * (len(messages) - len(t)))
+        print("Mismatch detected between original and translated messages.")
+
+    
+    messages_list = [
+        {
+            "sender": message.sender,
+            "recipient": message.recipient,
+            "timestamp": message.timestamp,
+            "content": t[i].replace("*", ""),  
+            "img": message.img,
+            "pdf": message.pdf
+        } for i, message in enumerate(messages)
+    ]
+
+    end_time = time.time()
+    print(f"Translation Time: {end_time - start_time} seconds")
+
+    user_img_data = None
+    if user_2.img:
+        user2_img_data = f"data:image/png;base64,{user_2.img}"
+    user_img = User.query.filter_by(username=session.get('username')).first().img
         
-        messages_list = [{"sender": message.sender, "recipient": message.recipient, "timestamp": message.timestamp, "content": t[i], "img": message.img, "pdf": message.pdf} for i,message in enumerate(messages)]
-        end_time = time.time()
-        print(f"Translation Time: {end_time - start_time} seconds")
-        user_img_data = None
+    if user_img:
+        user_img_data = f"data:image/png;base64,{user_img}"
         if user_2.img:
-            user2_img_data = f"data:image/png;base64,{user_2.img}"
-        user_img=User.query.filter_by(username=session.get('username')).first().img
-        
-        if user_img:
-            # print(user_img)
-            user_img_data = f"data:image/png;base64,{user_img}"
-            if user_2.img:
-                return render_template('chat.html', username=username, messages=messages_list, users=friend_list, reciver=name,user2=user2_img_data,user=user_img_data)
-            else:
-                return render_template('chat.html', username=username, messages=messages_list, users=friend_list, reciver=name,user=user_img_data)
+            return render_template('chat.html', username=username, messages=messages_list, users=friend_list, reciver=name, user2=user2_img_data, user=user_img_data)
         else:
-            if user_2.img:
-                return render_template('chat.html', username=username, messages=messages_list, users=friend_list, reciver=name,user2=user2_img_data)
-            else:
-                return render_template('chat.html', username=username, messages=messages_list, users=friend_list, reciver=name)
+            return render_template('chat.html', username=username, messages=messages_list, users=friend_list, reciver=name, user=user_img_data)
+    else:
+        if user_2.img:
+            return render_template('chat.html', username=username, messages=messages_list, users=friend_list, reciver=name, user2=user2_img_data)
+        else:
+            return render_template('chat.html', username=username, messages=messages_list, users=friend_list, reciver=name)
+
 
 
 
@@ -549,10 +558,10 @@ def handle_message(data):
         if not msg:
             logging.error("Message content is missing.")
             return
-        # Batch database queries
         
-        if "#^" in msg:
-            msg=msg.replace("#^", "")
+        
+        if "<-mg->" in msg:
+            msg=msg.replace("<-mg->", "")
             
         users = User.query.filter(User.username.in_([sender, recipient])).all()
         lg1, lg2 = None, None
