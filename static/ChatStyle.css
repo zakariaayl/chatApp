@@ -407,7 +407,7 @@ body {
   height:15px;
   background-color: green;
   border-radius: 50%;
-  
+  display: none;
 }
 }
 @media (max-width:870px){
@@ -419,7 +419,7 @@ body {
   height:15px;
   background-color: green;
   border-radius: 50%;
-  
+  display: none;
 }
 }
 @media (max-width:700px){
@@ -431,7 +431,7 @@ body {
   height:15px;
   background-color: green;
   border-radius: 50%;
-
+  display: none;
 }
 }
 
@@ -444,7 +444,7 @@ body {
   height:15px;
   background-color: green;
   border-radius: 50%;
-   
+  display: none;
 }
 }
 @media (max-width:454px){
@@ -456,7 +456,7 @@ body {
   height:15px;
   background-color: green;
   border-radius: 50%;
-  
+  display: none;
 }
 }
 @media (max-width:409px){
@@ -468,7 +468,7 @@ body {
   height:15px;
   background-color: green;
   border-radius: 50%;
-   
+  display: none;
 }
 }@media (max-width:362px){
     .online-indicator {
@@ -479,7 +479,7 @@ body {
   height:15px;
   background-color: green;
   border-radius: 50%;
-   
+  display: none;
 }
 
 }

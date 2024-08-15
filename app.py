@@ -341,7 +341,7 @@ def chat(name):
     
     print(".............kifach ja")
 
-    contents_trans = re.sub(r'\s*<-\s*mg\s*->\s*', '<-mg->', contents_trans)
+    contents_trans = re.sub(r'\s*<\s*-\s*mg\s*->\s*', '<-mg->', contents_trans)
 
     contents_trans = re.sub(r'(<-mg->)+', lambda m: m.group(0).replace("<-mg->", "<-mg->*"), contents_trans)
 
