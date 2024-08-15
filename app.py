@@ -325,7 +325,7 @@ def chat(name):
 
     start_time = time.time()
     contents = [message.content for message in messages]
-    unique_delimiter = "<-mg->"
+    unique_delimiter = "<-#@->"
     y = unique_delimiter.join(contents)
     
    
@@ -341,9 +341,9 @@ def chat(name):
     
     print(".............kifach ja")
 
-    contents_trans = re.sub(r'\s*<\s*-\s*mg\s*->\s*', '<-mg->', contents_trans)
+    contents_trans = re.sub(r'\s*<\s*-\s*#\s*@\s*-\s*>\s*', '<-#@->', contents_trans)
 
-    contents_trans = re.sub(r'(<-mg->)+', lambda m: m.group(0).replace("<-mg->", "<-mg->*"), contents_trans)
+    contents_trans = re.sub(r'(<-#@->)+', lambda m: m.group(0).replace("<-#@->", "<-#@->*"), contents_trans)
 
     t = contents_trans.split(unique_delimiter)
 
@@ -528,19 +528,7 @@ def confirm_email(token):
         return "Invalid token", 400
 
 
-@socketio.on('connect')
-def handle_connect():
-    username = session.get('username')
-    if username:
-        user_sessions[username] = request.sid
-        join_room(username)
 
-@socketio.on('disconnect')
-def handle_disconnect():
-    username = session.get('username')
-    if username in user_sessions:
-        leave_room(username)
-        del user_sessions[username]
 
 
 @socketio.on('message')
@@ -560,8 +548,8 @@ def handle_message(data):
             return
         
         
-        if "<-mg->" in msg:
-            msg=msg.replace("<-mg->", "")
+        if "<-#@->" in msg:
+            msg=msg.replace("<-#@->", "")
             
         users = User.query.filter(User.username.in_([sender, recipient])).all()
         lg1, lg2 = None, None
@@ -658,17 +646,11 @@ def verify(email, html, code):
         email_pass = 'zwgp yrpp hnvl fugp'
         em['To'] = email
         session['email'] = em['To']
-
-        # Generate the token and prepare email content
         token = generate_token(em['To'])
         em['Subject'] = 'Verify your account'
         html_content = render_template(html, token=token, user=session.get('username'), password=code)
-        
-        # Attach the HTML content as a MIMEText object
         html_part = MIMEText(html_content, 'html')
         em.attach(html_part)
-
-        # Send the email
         try:
             context = ssl.create_default_context()
             with smtplib.SMTP_SSL('smtp.gmail.com', context=context) as smtp:
@@ -700,7 +682,9 @@ def decode_token(token):
     except Exception as e:
         logging.error("Error decoding token: %s", e)
         return None
-users_online = {}
+
+
+users_online = {} 
 
 @socketio.on('join')
 def on_join(data):
@@ -709,6 +693,7 @@ def on_join(data):
     join_room(room)
     users_online[username] = True
     emit('user_status', {'username': username, 'status': 'online'}, room=room)
+    emit('online_users', users_online, room=request.sid)
 
 @socketio.on('disconnect')
 def on_disconnect():
@@ -716,6 +701,13 @@ def on_disconnect():
     if username in users_online:
         del users_online[username]
         emit('user_status', {'username': username, 'status': 'offline'}, broadcast=True)
+
+@socketio.on('connect')
+def handle_connect():
+    username = session.get('username')
+    if username:
+        user_sessions[username] = request.sid
+        join_room(username)
 
 
 if __name__ == '__main__':

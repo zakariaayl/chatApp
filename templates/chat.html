@@ -56,7 +56,7 @@
             <div class="chat-header">
                 {% if user2 %}
                 <img src="{{ user2 }}" alt="UserImg" id="img">
-                <div class="online-indicator" id="onlineIndicator"></div>
+                <div class="online-indicator" id="onlineIndicator" style="display:none" ></div>
                 {% else %}
                 <img src="/static/images/image_avatar.png" alt="UserImg" id="img"><div class="online-indicator" id="onlineIndicator" style="display:none"></div>
                 {% endif %}
@@ -252,11 +252,22 @@
         update(); 
     });
 
+    socket.on('online_users', function(onlineUsers) {
+        const reciverOnline = onlineUsers["{{ reciver }}"];
+        const onlineIndicator = document.getElementById('onlineIndicator');
+        if (reciverOnline) {
+            onlineIndicator.style.display = 'block';
+        } else {
+            onlineIndicator.style.display = 'none';
+        }
+    });
+
+   
     socket.on('connect', function () {
         console.log('Connected to server');
-        document.getElementById('onlineIndicator').style.display = 'block';
         socket.emit('join', { username: "{{ username }}", room: "default_room" });
     });
+
 
     socket.on('user_joined', function (data) {
         var joinMessage = $('<div class="message system"></div>').text(data.msg);
